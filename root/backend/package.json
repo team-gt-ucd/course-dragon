@@ -1,0 +1,27 @@
+{
+  "name": "mako-advisor-server",
+  "version": "1.0.0",
+  "description": "Server backend MERN API for mako-advisor application",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/team-gt-ucd/mako-advisor.git"
+  },
+  "author": "Team GT UCD",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/team-gt-ucd/mako-advisor/issues"
+  },
+  "homepage": "https://github.com/team-gt-ucd/mako-advisor#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongodb": "^4.10.0",
+    "mongoose": "^6.6.5"
+  }
+}
