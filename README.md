@@ -10,6 +10,7 @@ Starting the Frontend (React):
 ----
 
 `cd root/frontend`
+`npm install`
 `npm start`
 
 Connect to the Website on https://localhost:3000
