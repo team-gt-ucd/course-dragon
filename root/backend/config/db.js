@@ -1,10 +1,11 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
-const connectDB = async () => {
+const connectDB = async() => {
     try {
-        //database Name
-        const databaseName='mako-advisor-db';
-        const con = await mongoose.connect(`mongodb://127.0.0.1:27017/${databaseName}`, { 
+        // Create databaseName and MONGO_URI if config/config.env MONGO_URI is not available
+        const databaseName = `my-db`;
+        const MONGO_URI = process.env.MONGO_URI || `mongodb://127.0.0.1:27017/${databaseName}`;
+        const con = await mongoose.connect(MONGO_URI, { 
         useNewUrlParser: true,
         useUnifiedTopology: true
 //        useCreateIndex: true
