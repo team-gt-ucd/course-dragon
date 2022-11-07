@@ -2,7 +2,7 @@
   "name": "mako-advisor-server",
   "version": "1.0.0",
   "description": "Server backend MERN API for mako-advisor application",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
