@@ -27,3 +27,7 @@ Install MongoDB
 Create a directory `/data/db`
 Run MongoDB using this command
 `mongod --port 27017 --dbpath /Users/sebastianbarry/data/db`
+
+#### Using Docker
+
+`Docker run -p 27017:27017 mongo:latest`
