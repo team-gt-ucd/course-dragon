@@ -18,7 +18,7 @@ Starting the Backend (Node/Express):
 ----
 
 `cd root/backend`
-`node server.js`
+`node .`
 
 Starting the Database (Mongo):
 ----
