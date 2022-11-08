@@ -11,6 +11,8 @@ Starting the Frontend (React):
 
 `cd root/frontend`
 
+`npm install`
+
 `npm start`
 
 _**Connect to the Website on https://localhost:3000**_
@@ -20,7 +22,7 @@ Starting the Backend (Node/Express):
 
 `cd root/backend`
 
-`node server.js`
+`node .`
 
 _**Make sure that it's working:**_ `curl localhost:27017`
 _**If result looks like this then it is working:**_ 
