@@ -1,6 +1,6 @@
-# mako-advisor
+# course-dragon
 
-Mako Advisor is a MERN REST app. To start it, it is broken into 3 Parts:
+CourseDragon is a MERN REST app. To start it, it is broken into 3 Parts:
 
 - Frontend (React)
 - Backend (Node/Express)
