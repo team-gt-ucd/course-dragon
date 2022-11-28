@@ -1,5 +1,5 @@
 # Senior-Design-Capstone
-### Project Name: CUrPLAN
+### Project Name: Course Dragon
 
 ### Background on project name:
 CUrPLAN is a unique and customizable degree planning app (currently for computer science students getting a bachelor's degree) that helps students plan their degree without having to remember all the prereqs and restrictions for planning out classes. The name can be said in two ways: C Ur PLAN (see your plan) or CU PLAN (CU for the name of the school, and saying it as is while ignoring the lowercase 'r'). 

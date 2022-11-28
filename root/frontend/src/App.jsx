@@ -138,7 +138,7 @@ class App extends React.Component {
       'AddedClasses': this.state.AddedClasses.map(id => this.state.ClassDesc[id])
     });
     const blob = new Blob([fileData], { type: "application/json" });
-    saveAs(blob, "CUrPLAN");
+    saveAs(blob, "Course Dragon");
   }
 
   /*** Calculates amount of credit hours taken in total
@@ -419,7 +419,7 @@ class App extends React.Component {
         </DismissableAlert>
         <div className='sticky-top'>
         <Navbar variant='dark' bg='dark'>
-          <Navbar.Brand>CUrPLAN</Navbar.Brand>
+          <Navbar.Brand> <img src="src/dragonlogo.png" height="50px" width="50px"></img>Course Dragon</Navbar.Brand>
           <Nav>
             <Nav.Link
               className={(this.state.Display === 'Flow') ? 'active' : 'inactive'}
@@ -476,7 +476,7 @@ class App extends React.Component {
                 <section>
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <p>Drop your CUrPLAN .json file here</p>
+                    <p>Drop your Course Dragon .json file here</p>
                   </div>
                 </section>
               )}
