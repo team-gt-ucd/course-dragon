@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+import degreeMapItem from '../degree-map/degreeMapModel.js'
 
 const userSchema = mongoose.Schema({
     username: String,
@@ -14,8 +14,8 @@ const userSchema = mongoose.Schema({
         default: new Date(),
     },
     degree_map: {
-        type: [degree_map],
-        default: [new degree_map()]
+        type: [degreeMapItem.degree_map],
+        default: []
     }
 })
 

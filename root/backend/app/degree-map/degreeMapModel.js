@@ -1,17 +1,14 @@
 import mongoose from 'mongoose';
 
 
-const userSchema = mongoose.Schema({
+const degreeMapSchema = mongoose.Schema({
     major: String,
     catalog_year: String,
     total_credits_needed: String,
-    credits_needed_by_category: {
-        type: Date,
-        default: new Date(),
-    },
-    Semester_list: [],
+    credits_needed_by_category: String,
+    //Semester_list: [Semester],
 })
 
-var UserItem = mongoose.model('useritem', userSchema);
+var degreeMapItem = mongoose.model('degreemapitem', degreeMapSchema);
 
-export default UserItem
+export default degreeMapItem
