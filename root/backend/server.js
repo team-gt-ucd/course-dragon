@@ -5,24 +5,34 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import connectDB from "./config/db.js";
 
+//--------------- List of Route Resources (add new file paths to routes here) ---------------
 import userRoutes from "./app/users/userRoutes.js"
 
 //Load config
 dotenv.config({ path: "./config/config.env" });
 
+//Create express app
 const app = express();
+
+//Grab port number from /config/config.env or defaultly use 4000
 const PORT = process.env.PORT || 4000;
 
+//making the server accessible to any domain that requests a resource from your server via a browser
+// https://stackoverflow.com/questions/46024363/what-does-app-usecors-do
 app.use(cors());
 
+//make the server parse incoming messages as json payloads
 app.use(express.json());
+
+//--------------- List of our Routes (add new routes here) ---------------
 app.use("/users", userRoutes);
 
-//backend greeting page
-app.get("/", (req, res) => {
+// example of a route defined here
+/*app.get("/", (req, res) => {
   res.send("employee backende erisildi");
-});
+});*/
 
+// Begin listening on the server
 app.listen(PORT, () => {
   connectDB(); //Connect to MongoDB
   console.log(`Server is running on port: ${PORT}`);
