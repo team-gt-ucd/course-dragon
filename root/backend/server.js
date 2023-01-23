@@ -6,6 +6,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 
 //--------------- List of Route Resources (add new file paths to routes here) ---------------
+import homeRoutes from "./app/home/homeRoutes.js"
 import userRoutes from "./app/users/userRoutes.js"
 
 //Load config
@@ -25,6 +26,7 @@ app.use(cors());
 app.use(express.json());
 
 //--------------- List of our Routes (add new routes here) ---------------
+app.use("/", homeRoutes);
 app.use("/users", userRoutes);
 
 // example of a route defined here
