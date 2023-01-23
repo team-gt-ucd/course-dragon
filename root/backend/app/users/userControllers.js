@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import UserItem from "../models/userItem.js";
+import UserItem from "./userModel.js";
 
 const router = express.Router();
 
@@ -30,12 +30,13 @@ export const getUser = async (req, res) => {
 };
 
 export const createUser = async (req, res) => {
-  const { username, password_hash, account_type } = req.body;
+  const { username, password_hash, account_type, degree_map } = req.body;
   console.log(username);
   const newUserItem = new UserItem({
     username,
     password_hash,
     account_type,
+    degree_map,
   });
 
   try {
@@ -49,12 +50,12 @@ export const createUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { username, password_hash, account_type } = req.body;
+  const { username, password_hash, account_type, degree_map } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with id: ${id}`);
 
-  const updatedUser = { username, password_hash, account_type, _id: id };
+  const updatedUser = { username, password_hash, account_type, degree_map, _id: id };
 
   await UserItem.findByIdAndUpdate(id, updatedUser, { new: true });
 

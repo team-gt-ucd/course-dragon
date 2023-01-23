@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import connectDB from "./config/db.js";
 
-import userRoutes from "./routes/user.js"
+import userRoutes from "./app/users/userRoutes.js"
 
 //Load config
 dotenv.config({ path: "./config/config.env" });

@@ -13,6 +13,10 @@ const userSchema = mongoose.Schema({
         type: Date,
         default: new Date(),
     },
+    degree_map: {
+        type: [degree_map],
+        default: [new degree_map()]
+    }
 })
 
 var UserItem = mongoose.model('useritem', userSchema);
