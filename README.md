@@ -22,6 +22,8 @@ Starting the Backend (Node/Express):
 
 `cd root/backend`
 
+`npm install`
+
 `npm start`
 
 _**Make sure that it's working:**_ `curl localhost:4001`
