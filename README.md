@@ -22,14 +22,14 @@ Starting the Backend (Node/Express):
 
 `cd root/backend`
 
-`node .`
+`npm start`
 
-_**Make sure that it's working:**_ `curl localhost:27017`
+_**Make sure that it's working:**_ `curl localhost:4001`
 _**If result looks like this then it is working:**_ 
 
 ```
 (base) username@your-computer ~ % curl localhost:4001
-employee backende erisildi%
+home get greeting%
 ```
 
 Starting the Database (Mongo):
