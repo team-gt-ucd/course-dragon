@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 
-const degreeMapSchema = mongoose.Schema({
+export const degreeMapSchema = mongoose.Schema({
     major: String,
     catalog_year: String,
     total_credits_needed: String,
