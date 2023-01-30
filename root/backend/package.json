@@ -1,7 +1,7 @@
 {
-  "name": "mako-advisor-server",
+  "name": "course-dragon-server",
   "version": "1.0.0",
-  "description": "Server backend MERN API for mako-advisor application",
+  "description": "Server backend MERN API for course-dragon application",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/team-gt-ucd/mako-advisor.git"
+    "url": "git+https://github.com/team-gt-ucd/course-dragon.git"
   },
   "author": "Team GT UCD",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/team-gt-ucd/mako-advisor/issues"
+    "url": "https://github.com/team-gt-ucd/course-dragon/issues"
   },
-  "homepage": "https://github.com/team-gt-ucd/mako-advisor#readme",
+  "homepage": "https://github.com/team-gt-ucd/course-dragon#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
