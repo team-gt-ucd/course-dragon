@@ -1,0 +1,77 @@
+# Version of Docker-compose
+version: "3"
+services:
+  
+  # Service name
+  client:
+    # Creating a custom image
+    build:
+      # Location to the Dockerfile
+      context: ./frontend
+      # Name of the Dockerfile
+      dockerfile: Dockerfile
+    ports:
+      # External port:Internal port
+      - 3000:3000
+    container_name: course-dragon-frontend-app
+    networks:
+      - course-dragon-network
+    volumes:
+      # Syntax <nameOfVolume>:<directorInDocker>
+      - ./frontend/public:/client/public
+      - ./frontend/src:/client/src
+      - ./frontend/deploy.sh:/client/deploy.sh
+      - ./frontend/index.html:/client/index.html
+      - ./frontend/react.vite.config.js:/client/react.vite.config.js
+      - ./frontend/vite.config.js:/client/vite.config.js
+    depends_on:
+      - server
+    stdin_open: true
+    tty: true
+
+  # Service name
+  server:
+    # Creating a custom image
+    build:
+      # Location to the Dockerfile
+      context: ./backend
+      # Name of the Dockerfile
+      dockerfile: Dockerfile
+    ports:
+      # External port:Internal port
+      - 4001:4001
+    container_name: course-dragon-backend-app
+    networks:
+      - course-dragon-network
+    volumes:
+      # Syntax <nameOfVolume>:<directorInDocker>
+      - ./backend:/server
+    links:
+      - db:mongo
+    depends_on:
+      - db
+
+  # Service name
+  db:
+    # Defining a prebuilt image
+    image: mongo
+    ports:
+      # External port:Internal port
+      - 27017:27017
+    container_name: mongo-db
+    networks:
+      - course-dragon-network
+    volumes:
+      # Syntax <nameOfVolume>:<directorInDocker>
+      - mongo-data:/data/db
+
+# Making the network accessible to other services.
+networks:
+  course-dragon-network:
+    driver: bridge
+
+# Making the volumes accessible to other services.
+volumes:
+  # Declaring the custom volumes
+  mongo-data:
+    driver: local
