@@ -7,7 +7,7 @@ const router = express.Router();
 export const getHome = async (req, res) => {
   try {
 
-    res.status(200).send("server is running"); //if you do a HTTP GET on localhost:4001, you will get this as a response
+    res.status(200).send("server is running");
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
