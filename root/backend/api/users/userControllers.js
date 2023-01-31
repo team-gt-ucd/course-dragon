@@ -31,7 +31,7 @@ export const getUser = async (req, res) => {
 
 export const createUser = async (req, res) => {
   const { username, password_hash, account_type, degree_map } = req.body;
-  console.log("User created: ", username); //Comment here
+  console.log("User created: ", username);
   const newUserItem = new UserItem({
     username,
     password_hash,
