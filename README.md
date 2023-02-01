@@ -6,6 +6,19 @@ CourseDragon is a MERN REST app. To start it, it is broken into 3 Parts:
 - Backend (Node/Express)
 - Database (Mongo)
 
+# Setup (before running)
+
+To setup, you must install node_modules by doing the following:
+
+```
+cd root/backend
+npm install
+```
+```
+cd root/frontend
+npm install
+```
+
 # How to run
 
 There are 2 methods to running the application:
