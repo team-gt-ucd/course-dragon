@@ -7,7 +7,7 @@ const router = express.Router();
 export const getHome = async (req, res) => {
   try {
 
-    res.status(200).send("home get greeting");
+    res.status(200).send("server is running");
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
