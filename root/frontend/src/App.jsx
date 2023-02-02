@@ -1,4 +1,4 @@
-import './styles/App.css';
+import './App.css';
 import { compareSemesters } from './functions.js';
 import ListView from './ListView.jsx';
 import FlowChart from './FlowChart.jsx';
