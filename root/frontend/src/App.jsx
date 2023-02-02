@@ -1,10 +1,10 @@
+import React, { Component } from 'react';
 import './App.css';
 import { compareSemesters } from './functions.js';
 import ListView from './ListView.jsx';
 import FlowChart from './FlowChart.jsx';
 import AddCustomClass from './CustomClassModal.jsx';
 import DismissableAlert from './DismissableAlert.jsx';
-import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Nav from 'react-bootstrap/Nav';
@@ -14,7 +14,7 @@ import Dropzone from 'react-dropzone';
 import AddCustomSemester from './CustomSemesterModal';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
-class App extends React.Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
