@@ -8,7 +8,7 @@ import connectDB from "./config/db.js";
 //--------------- List of Route Resources (add new file paths to routes here) ---------------
 import homeRoutes from "./api/home/homeRoutes.js"
 import userRoutes from "./api/users/userRoutes.js"
-
+import creditsRoutes from "./api/credits/creditsRoutes.js"
 //Load config
 dotenv.config({ path: "./config/config.env" });
 
@@ -28,7 +28,7 @@ app.use(express.json());
 //--------------- List of our Routes (add new routes here) ---------------
 app.use("/", homeRoutes);
 app.use("/users", userRoutes);
-
+app.use("/credits", creditsRoutes);
 // example of a route defined here
 /*app.get("/", (req, res) => {
   res.send("employee backende erisildi");
