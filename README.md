@@ -8,6 +8,12 @@ CourseDragon is a MERN REST app. To start it, it is broken into 3 Parts:
 
 # Setup (before running)
 
+First, install Node (you mayneed to instal brew first, if you are on a mac)
+
+```
+brew install node
+```
+
 To setup, you must install node_modules by doing the following:
 
 ```
@@ -35,8 +41,8 @@ There are 2 methods to running the application:
 * For Docker start, run the following commands _(this is the `docker-compose` method)_:
 
 ```
-$ cd root
-$ docker-compose up --build
+cd root
+docker-compose up --build
 ```
 
 To test that it has started correctly, you can do the following:
