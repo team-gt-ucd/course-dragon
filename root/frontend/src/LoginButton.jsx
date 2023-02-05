@@ -19,9 +19,9 @@ function LoginButton (props) {
         Login
       </Button> */}
 
-      <b1 onClick={handleShow}>
+      <p onClick={handleShow}>
         Login
-      </b1>
+      </p>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -41,7 +41,7 @@ function LoginButton (props) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="success" onClick={handleClose}>
+          <Button variant="success" onClick={() => console.log("\nLogin button clicked!")}>
             Login
           </Button>
         </Modal.Footer>
