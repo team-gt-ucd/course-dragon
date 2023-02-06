@@ -10,6 +10,7 @@ import homeRoutes from "./api/home/homeRoutes.js"
 import userRoutes from "./api/users/userRoutes.js"
 import creditsRoutes from "./api/credits/creditsRoutes.js"
 import coursesRoutes from "./api/courses/coursesRoutes.js"
+import instructorScoresRoutes from "./api/instructor-scores/instructorScoresRoutes.js"
 //Load config
 dotenv.config({ path: "./config/config.env" });
 
@@ -31,6 +32,7 @@ app.use("/", homeRoutes);
 app.use("/users", userRoutes);
 app.use("/credits", creditsRoutes);
 app.use("/courses",coursesRoutes);
+app.use("/instructor-scores", instructorScoresRoutes);
 // example of a route defined here
 /*app.get("/", (req, res) => {
   res.send("employee backende erisildi");
