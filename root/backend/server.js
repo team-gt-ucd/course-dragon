@@ -9,6 +9,7 @@ import connectDB from "./config/db.js";
 import homeRoutes from "./api/home/homeRoutes.js"
 import userRoutes from "./api/users/userRoutes.js"
 import creditsRoutes from "./api/credits/creditsRoutes.js"
+import coursesRoutes from "./api/courses/coursesRoutes.js"
 //Load config
 dotenv.config({ path: "./config/config.env" });
 
@@ -29,6 +30,7 @@ app.use(express.json());
 app.use("/", homeRoutes);
 app.use("/users", userRoutes);
 app.use("/credits", creditsRoutes);
+app.use("/courses",coursesRoutes);
 // example of a route defined here
 /*app.get("/", (req, res) => {
   res.send("employee backende erisildi");
