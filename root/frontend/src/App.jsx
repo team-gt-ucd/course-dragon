@@ -13,6 +13,7 @@ import saveAs from 'file-saver';
 import Dropzone from 'react-dropzone';
 import AddCustomSemester from './CustomSemesterModal';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import LoginButton from './LoginButton.jsx'
 
 class App extends Component {
   constructor(props) {
@@ -405,6 +406,7 @@ class App extends Component {
       content = this.displayEditView();
     }
     let [takenHours, plannedHours, neededHours] = this.calculateTotalHours();
+
     // this return function in the render function will display the content
     // it creates the html code for the navbars and basic layout of the page
     // the {content} segment indicates that the html code from the variable above should be inserted
@@ -421,9 +423,14 @@ class App extends Component {
         <Navbar variant='dark' bg='dark'>
           <Navbar.Brand> <img src="src/dragonlogo.png" height="50px" width="50px"></img>Course Dragon</Navbar.Brand>
           <Nav>
+            <Nav.Link>
+              <LoginButton/>
+            </Nav.Link>
             <Nav.Link
               className={(this.state.Display === 'Flow') ? 'active' : 'inactive'}
-              onClick={() => this.menuClick(0)}>Flowchart</Nav.Link>
+              onClick={() => this.menuClick(0)}>
+                Flowchart
+            </Nav.Link>
             <NavDropdown
               className={((this.state.Display.startsWith('Edit')) ? 'active' : 'inactive')}
               onClick={() => this.menuClick(1)}
@@ -444,7 +451,7 @@ class App extends Component {
         </div>
         <div className='header-options'>
           <div className="credit-count">{`${takenHours}/${neededHours} taken credits`}</div>
-          <div className='spacer'></div> 
+          <div className='spacer'></div>
           <AddCustomSemester onSubmit={this.onAddSemesterSubmit} />
           <AddCustomClass
             onSubmit={this.onAddClassSubmit}
