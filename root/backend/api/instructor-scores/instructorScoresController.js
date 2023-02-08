@@ -1,14 +1,14 @@
 import express from "express";
 import mongoose from "mongoose";
-import instructorScoresItem from "./instructorScoresModel.js";
+import InstructorScoresItem from "./instructorScoresModel.js";
 
 const router = express.Router();
 
 export const getInstructorScores = async (req, res) => {
   try {
-    const InstructorScoreList = await instructorScoresItem.find();
+    const instructorScoreList = await InstructorScoresItem.find();
 
-    res.status(200).json(InstructorScoresList);
+    res.status(200).json(instructorScoresList);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -17,7 +17,7 @@ export const getInstructorScores = async (req, res) => {
 export const createInstructorScores = async (req, res) => {
   const { instructor, course, average_rating} = req.body;
   console.log(instructor + " " + course + " " + average_rating);
-  const newinstructorScores = new instructorScoresItem({
+  const newInstructorScores = new InstructorScoresItem({
     instructor,
     course,
     average_rating,
@@ -41,7 +41,7 @@ export const updateInstructorScores = async (req, res) => {
 
   const updatedInstructorScore = { instructor, course, average_rating, _id: id };
 
-  await InstructorScoreItem.findByIdAndUpdate(id, updatedInstructorScore, { new: true });
+  await InstructorScoresItem.findByIdAndUpdate(id, updatedInstructorScore, { new: true });
 
   res.json(updatedInstructorScore);
   console.log("updated instructor score: ", updatedInstructorScore);

@@ -7,6 +7,6 @@ export const instructorScoresSchema = mongoose.Schema({
     average_rating: String
 })
 
-var instructorScoresItem = mongoose.model('instructorScoresitem', instructorScoresSchema);
+var InstructorScoresItem = mongoose.model('instructorScoresitem', instructorScoresSchema);
 
-export default instructorScoresItem
+export default InstructorScoresItem

@@ -5,7 +5,7 @@ import {
   createCourses,
   updateCourses,
   deleteCourses,
-} from "./CoursesController.js";
+} from "./coursesController.js";
 
 const router = express.Router();
 
