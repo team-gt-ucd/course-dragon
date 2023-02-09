@@ -2,6 +2,7 @@ import express from "express";
 
 import {
   getSemester,
+  getSemesters,
   createSemester,
   updateSemester,
   deleteSemester,
@@ -9,7 +10,8 @@ import {
 
 const router = express.Router();
 
-router.get("/", getSemester);
+router.get("/", getSemesters);
+router.get("/:id", getSemester);
 router.post("/", createSemester);
 router.patch("/:id", updateSemester);
 router.delete("/:id", deleteSemester);

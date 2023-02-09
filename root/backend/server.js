@@ -9,9 +9,10 @@ import connectDB from "./config/db.js";
 import homeRoutes from "./api/home/homeRoutes.js"
 import userRoutes from "./api/users/userRoutes.js"
 import creditsRoutes from "./api/credits/creditsRoutes.js"
-import coursesRoutes from "./api/courses/coursesRoutes.js"
-import instructorScoresRoutes from "./api/instructor-scores/instructorScoresRoutes.js"
+import courseRoutes from "./api/course/courseRoutes.js"
+import instructorScoreRoutes from "./api/instructor-score/instructorScoreRoutes.js"
 import semesterRoutes from "./api/semester/semesterRoutes.js"
+import degreeMapRoutes from "./api/degree-map/degreeMapRoutes.js"
 //Load config
 dotenv.config({ path: "./config/config.env" });
 
@@ -32,9 +33,10 @@ app.use(express.json());
 app.use("/", homeRoutes);
 app.use("/users", userRoutes);
 app.use("/credits", creditsRoutes);
-app.use("/courses",coursesRoutes);
-app.use("/instructor-scores", instructorScoresRoutes);
+app.use("/course",courseRoutes);
+app.use("/instructor-score", instructorScoreRoutes);
 app.use("/semester", semesterRoutes);
+app.use("/degree-map", degreeMapRoutes);
 // example of a route defined here
 /*app.get("/", (req, res) => {
   res.send("employee backende erisildi");

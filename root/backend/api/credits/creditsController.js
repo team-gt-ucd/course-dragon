@@ -4,9 +4,9 @@ import CreditsItem from "./creditsModel.js";
 
 const router = express.Router();
 
-export const getCredits = async (req, res) => {
+export const getAllCredits = async (req, res) => {
   try {
-    const creditsList = await creditsItem.find();
+    const creditsList = await CreditsItem.find();
 
     res.status(200).json(creditsList);
   } catch (error) {
@@ -14,8 +14,23 @@ export const getCredits = async (req, res) => {
   }
 };
 
+export const getCredits = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No post with id: ${id}`);
+
+  try {
+    const creditsItem = await CreditsItem.findById(id);
+
+    res.status(200).json(creditsItem);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
 export const createCredits = async (req, res) => {
-  const { credits_count, category} = req.body;
+  const { credits_count, category } = req.body;
   console.log(credits_count + " " + category);
   const newCreditsItem = new CreditsItem({
     credits_count,
