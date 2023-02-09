@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+import { semesterSchema } from '../semester/semesterModel.js';
 
 export const degreeMapSchema = mongoose.Schema({
     major: String,
