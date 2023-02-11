@@ -30,14 +30,14 @@ export const getDegreeMap = async (req, res) => {
 };
 
 export const createDegreeMap = async (req, res) => {
-  const { major, catalog_year, total_credits_needed, credits_needed_by_category/*, Semester_list*/ } = req.body;
+  const { major, catalog_year, total_credits_needed, credits_needed_by_category, Semester_list } = req.body;
   console.log(major + " " + catalog_year);
   const newDegreeMapItem = new DegreeMapItem({
     major,
     catalog_year,
     total_credits_needed,
     credits_needed_by_category,
-    //Semester_list,
+    Semester_list,
   });
 
   try {
@@ -51,12 +51,12 @@ export const createDegreeMap = async (req, res) => {
 
 export const updateDegreeMap = async (req, res) => {
   const { id } = req.params;
-  const { major, catalog_year, total_credits_needed, credits_needed_by_category/*, Semester_list*/ } = req.body;
+  const { major, catalog_year, total_credits_needed, credits_needed_by_category, Semester_list } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with id: ${id}`);
 
-  const updatedDegreeMap = { major, catalog_year, total_credits_needed, credits_needed_by_category/*, Semester_list*/, _id: id };
+  const updatedDegreeMap = { major, catalog_year, total_credits_needed, credits_needed_by_category, Semester_list, _id: id };
 
   await DegreeMapItem.findByIdAndUpdate(id, updatedDegreeMap, { new: true });
 

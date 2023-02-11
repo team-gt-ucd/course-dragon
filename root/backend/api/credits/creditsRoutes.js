@@ -2,6 +2,7 @@ import express from "express";
 
 import {
   getCredits,
+  getAllCredits,
   createCredits,
   updateCredits,
   deleteCredits,
@@ -9,7 +10,8 @@ import {
 
 const router = express.Router();
 
-router.get("/", getCredits);
+router.get("/", getAllCredits);
+router.get("/:id", getCredits);
 router.post("/", createCredits);
 router.patch("/:id", updateCredits);
 router.delete("/:id", deleteCredits);

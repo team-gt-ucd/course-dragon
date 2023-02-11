@@ -30,13 +30,13 @@ export const getUser = async (req, res) => {
 };
 
 export const createUser = async (req, res) => {
-  const { username, password_hash, account_type, degree_map } = req.body;
+  const { username, password_hash, account_type, Degree_map_list } = req.body;
   console.log("User created: ", username);
   const newUserItem = new UserItem({
     username,
     password_hash,
     account_type,
-    degree_map,
+    Degree_map_list,
   });
 
   try {
@@ -50,17 +50,17 @@ export const createUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { username, password_hash, account_type, degree_map } = req.body;
+  const { username, password_hash, account_type, Degree_map_list } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).send(`No post with id: ${id}`);
 
-  const updatedUser = { username, password_hash, account_type, degree_map, _id: id };
+  const updatedUser = { username, password_hash, account_type, Degree_map_list, _id: id };
 
   await UserItem.findByIdAndUpdate(id, updatedUser, { new: true });
 
   res.json(updatedUser);
-  console.log("editte backend", updatedUser);
+  console.log("Updated User: ", updatedUser);
 };
 
 export const deleteUser = async (req, res) => {
