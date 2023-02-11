@@ -6,7 +6,7 @@ const router = express.Router();
 
 export const getCourses = async (req, res) => {
   try {
-    const courseList = await courseItem.find();
+    const courseList = await CourseItem.find();
 
     res.status(200).json(courseList);
   } catch (error) {
@@ -21,16 +21,16 @@ export const getCourse = async (req, res) => {
     return res.status(404).send(`No post with id: ${id}`);
 
   try {
-    const semesterItem = await SemesterItem.findById(id);
+    const courseItem = await CourseItem.findById(id);
 
-    res.status(200).json(semesterItem);
+    res.status(200).json(courseItem);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
 
 export const createCourse = async (req, res) => {
-  const { term, year, course_subject, course_code, course_title, course_description, Credits, taken, prerequisites_list, Instructor_score_list} = req.body;
+  const { term, year, course_subject, course_code, course_title, course_description, Credits, taken, prerequisites_list, Instructor_score_list } = req.body;
   console.log(course_subject + " " + course_code + ": " + course_title);
   const newCourseItem = new CourseItem({
     term,

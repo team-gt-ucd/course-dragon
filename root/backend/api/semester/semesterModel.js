@@ -12,7 +12,7 @@ export const semesterSchema = mongoose.Schema({
         min: [1973, 'Please enter a valid year'],
         max: [3000, 'Please enter a valid year']
     },
-    Courses_list: [courseSchema],
+    Courses_list: [courseSchema]
 })
 
 var semesterItem = mongoose.model('semesteritem', semesterSchema);
