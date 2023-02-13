@@ -1,33 +1,19 @@
 {
 	"ColorOrder": [
 		"CS CORE",
-		"CS SYSTEMS CORE",
-		"CS BREADTH",
 		"CS ELECTIVE",
-		"ENGR",
+		"FREE ELECTIVE",
 		"MATH",
 		"SCIENCE",
 		"GEN ED CORE"
 	],
 	"Colors": {
 		"CS CORE": "#bcd6ed",
-		"CS ELECTIVE": "#674ea7",
+		"CS ELECTIVE": "#F7DC6F",
 		"SCIENCE": "#a8d08d",
 		"GEN ED CORE": "#bebebe",
 		"MATH": "#e1efd8",
-		"CS SYSTEMS CORE": "#2d74b5",
-		"CS BREADTH": "#D9BBF9",
-		"ENGR": "#F5CBA7"
-	},
-	"Colors_Credit": {
-		"CS CORE": "25",
-		"CS ELECTIVE": "15",
-		"SCIENCE": "10",
-		"GEN ED CORE": "24",
-		"MATH": "12",
-		"CS SYSTEMS CORE": "21",
-		"CS BREADTH": "18",
-		"ENGR": "3"
+		"FREE ELECTIVE": "#F5CBA7"
 	},
 	"Semesters": [
 		"Fall-1", 
@@ -53,28 +39,28 @@
 			"Color": "CS CORE"
 		},
 		{
-			"Name": "CSCI 1510",
-			"Credits": "3 hours",
-			"Semester": "Fall-1",
-			"Color": "CS SYSTEMS CORE"
-		},
-		{
-			"Name": "MATH 1401",
-			"Credits": "4 hours",
-			"Semester": "Fall-1",
-			"Color": "MATH"
-		},
-		{
 			"Name": "ENGR 1200",
 			"Credits": "3 hours",
 			"Semester": "Fall-1",
-			"Color": "ENGR"
+			"Color": "FREE ELECTIVE"
+		},
+		{
+			"Name": "ENGL 1020",
+			"Credits": "3 hours",
+			"Semester": "Fall-1",
+			"Color": "GEN ED CORE"
 		},
 		{
 			"Name": "Gen Ed Core",
 			"Credits": "3 hours",
 			"Semester": "Fall-1",
 			"Color": "GEN ED CORE"
+		},
+		{
+			"Name": "MATH 1401",
+			"Credits": "4 hours",
+			"Semester": "Spring-1",
+			"Color": "MATH"
 		},
 		{
 			"Name": "CSCI 2312",
@@ -83,25 +69,19 @@
 			"Color": "CS CORE"
 		},
 		{
-			"Name": "CSCI 2525",
+			"Name": "Free Elective Area of Concentration",
 			"Credits": "3 hours",
 			"Semester": "Spring-1",
-			"Color": "CS SYSTEMS CORE"
+			"Color": "FREE ELECTIVE"
 		},
 		{
-			"Name": "MATH 2411",
-			"Credits": "4 hours",
-			"Semester": "Spring-1",
-			"Color": "MATH"
-		},
-		{
-			"Name": "ENGL 1020",
+			"Name": "Free Elective Area of Concentration",
 			"Credits": "3 hours",
 			"Semester": "Spring-1",
-			"Color": "GEN ED CORE"
+			"Color": "FREE ELECTIVE"
 		},
 		{
-			"Name": "Gen Ed Core",
+			"Name": "ENGL 2030",
 			"Credits": "3 hours",
 			"Semester": "Spring-1",
 			"Color": "GEN ED CORE"
@@ -119,34 +99,28 @@
 			"Color": "CS CORE"
 		},
 		{
-			"Name": "Science",
-			"Credits": "4 hours",
+			"Name": "Free Elective Area of Concentration",
+			"Credits": "3 hours",
+			"Semester": "Fall-2",
+			"Color": "FREE ELECTIVE"
+		},
+		{
+			"Name": "Science 1",
+			"Credits": "3 hours",
 			"Semester": "Fall-2",
 			"Color": "SCIENCE"
 		},
 		{
-			"Name": "Science Lab",
+			"Name": "Science 1 Lab",
 			"Credits": "1 hour",
 			"Semester": "Fall-2",
 			"Color": "SCIENCE"
-		},
-		{
-			"Name": "ENGL 2030",
-			"Credits": "3 hours",
-			"Semester": "Fall-2",
-			"Color": "GEN ED CORE"
 		},
 		{
 			"Name": "Gen Ed Core",
 			"Credits": "3 hours",
 			"Semester": "Fall-2",
 			"Color": "GEN ED CORE"
-		},
-		{
-			"Name": "CSCI 3287",
-			"Credits": "3 hours",
-			"Semester": "Spring-2",
-			"Color": "CS CORE"
 		},
 		{
 			"Name": "CSCI 3412",
@@ -155,58 +129,64 @@
 			"Color": "CS CORE"
 		},
 		{
-			"Name": "CSCI 3761",
+			"Name": "Technical Elective",
 			"Credits": "3 hours",
 			"Semester": "Spring-2",
-			"Color": "CS SYSTEMS CORE"
+			"Color": "CS ELECTIVE"
 		},
 		{
-			"Name": "Science",
-			"Credits": "4 hours",
+			"Name": "Free Elective Area of Concentration",
+			"Credits": "3 hours",
+			"Semester": "Spring-2",
+			"Color": "FREE ELECTIVE"
+		},
+		{
+			"Name": "MATH 2000 level elective",
+			"Credits": "3 hours",
+			"Semester": "Spring-2",
+			"Color": "MATH"
+		},
+		{
+			"Name": "Science 2",
+			"Credits": "3 hours",
 			"Semester": "Spring-2",
 			"Color": "SCIENCE"
 		},
 		{
-			"Name": "Science",
+			"Name": "Science 2 Lab",
 			"Credits": "1 hour",
 			"Semester": "Spring-2",
 			"Color": "SCIENCE"
 		},
 		{
-			"Name": "Gen Ed Core",
-			"Credits": "3 hours",
-			"Semester": "Spring-2",
-			"Color": "GEN ED CORE"
-		},
-		{
-			"Name": "CSCI 3415",
+			"Name": "CSCI 3287",
 			"Credits": "3 hours",
 			"Semester": "Fall-3",
-			"Color": "CS SYSTEMS CORE"
-		},
-		{
-			"Name": "CSCI 3453",
-			"Credits": "3 hours",
-			"Semester": "Fall-3",
-			"Color": "CS SYSTEMS CORE"
-		},
-		{
-			"Name": "CS Breadth Choice",
-			"Credits": "3 hours",
-			"Semester": "Fall-3",
-			"Color": "CS BREADTH"
-		},
-		{
-			"Name": "CS Breadth Choice",
-			"Credits": "3 hours",
-			"Semester": "Fall-3",
-			"Color": "CS BREADTH"
+			"Color": "CS CORE"
 		},
 		{
 			"Name": "Technical Elective",
 			"Credits": "3 hours",
 			"Semester": "Fall-3",
 			"Color": "CS ELECTIVE"
+		},
+		{
+			"Name": "Free Elective Area of Concentration",
+			"Credits": "3 hours",
+			"Semester": "Fall-3",
+			"Color": "FREE ELECTIVE"
+		},
+		{
+			"Name": "Free Elective Area of Concentration",
+			"Credits": "3 hours",
+			"Semester": "Fall-3",
+			"Color": "FREE ELECTIVE"
+		},
+		{
+			"Name": "Gen Ed Core",
+			"Credits": "3 hours",
+			"Semester": "Fall-3",
+			"Color": "GEN ED CORE"
 		},
 		{
 			"Name": "CSCI 3508",
@@ -215,22 +195,22 @@
 			"Color": "CS CORE"
 		},
 		{
-			"Name": "CS Breadth Choice",
-			"Credits": "3 hours",
-			"Semester": "Spring-3",
-			"Color": "CS BREADTH"
-		},
-		{
 			"Name": "Technical Elective",
 			"Credits": "3 hours",
 			"Semester": "Spring-3",
 			"Color": "CS ELECTIVE"
 		},
 		{
-			"Name": "MATH 3195",
-			"Credits": "4 hours",
+			"Name": "Free Elective Area of Concentration",
+			"Credits": "3 hours",
 			"Semester": "Spring-3",
-			"Color": "MATH"
+			"Color": "FREE ELECTIVE"
+		},
+		{
+			"Name": "Free Elective Area of Concentration",
+			"Credits": "3 hours",
+			"Semester": "Spring-3",
+			"Color": "FREE ELECTIVE"
 		},
 		{
 			"Name": "Gen Ed Core",
@@ -239,28 +219,10 @@
 			"Color": "GEN ED CORE"
 		},
 		{
-			"Name": "CSCI 4034",
+			"Name": "Technical Elective",
 			"Credits": "3 hours",
 			"Semester": "Fall-4",
-			"Color": "CS CORE"
-		},
-		{
-			"Name": "CSCI 4738",
-			"Credits": "3 hours",
-			"Semester": "Fall-4",
-			"Color": "CS BREADTH"
-		},
-		{
-			"Name": "CS Breadth Choice",
-			"Credits": "3 hours",
-			"Semester": "Fall-4",
-			"Color": "CS BREADTH"
-		},
-		{
-			"Name": "CSCI 4551",
-			"Credits": "3 hours",
-			"Semester": "Fall-4",
-			"Color": "CS SYSTEMS CORE"
+			"Color": "CS ELECTIVE"
 		},
 		{
 			"Name": "Technical Elective",
@@ -269,28 +231,46 @@
 			"Color": "CS ELECTIVE"
 		},
 		{
-			"Name": "CSCI 4591",
+			"Name": "Free Elective Area of Concentration",
 			"Credits": "3 hours",
-			"Semester": "Spring-4",
-			"Color": "CS SYSTEMS CORE"
+			"Semester": "Fall-4",
+			"Color": "FREE ELECTIVE"
 		},
 		{
-			"Name": "CSCI 4739",
+			"Name": "Free Elective Area of Concentration",
 			"Credits": "3 hours",
-			"Semester": "Spring-4",
-			"Color": "CS BREADTH"
+			"Semester": "Fall-4",
+			"Color": "FREE ELECTIVE"
 		},
 		{
-			"Name": "CS Breadth Choice",
+			"Name": "Gen Ed Core",
 			"Credits": "3 hours",
-			"Semester": "Spring-4",
-			"Color": "CS BREADTH"
+			"Semester": "Fall-4",
+			"Color": "GEN ED CORE"
 		},
 		{
 			"Name": "Technical Elective",
 			"Credits": "3 hours",
 			"Semester": "Spring-4",
 			"Color": "CS ELECTIVE"
+		},
+		{
+			"Name": "Technical Elective",
+			"Credits": "3 hours",
+			"Semester": "Spring-4",
+			"Color": "CS ELECTIVE"
+		},
+		{
+			"Name": "Free Elective Area of Concentration",
+			"Credits": "3 hours",
+			"Semester": "Spring-4",
+			"Color": "FREE ELECTIVE"
+		},
+		{
+			"Name": "Free Elective Area of Concentration",
+			"Credits": "2 hours",
+			"Semester": "Spring-4",
+			"Color": "FREE ELECTIVE"
 		},
 		{
 			"Name": "Gen Ed Core",
