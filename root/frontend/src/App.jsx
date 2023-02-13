@@ -94,6 +94,25 @@ class App extends Component {
     } else if (i == 3) { //if second submenu of second button is clicked
       this.setState({ Display: 'EditCS' });
     }
+
+    else if (i == 4) { //if second submenu of second button is clicked
+          this.setState({ Display: 'Admin' });
+        }
+  }
+
+    // New code by Nima
+  changeMajor(text, i) {
+    this.setState({dropDownValue: text})
+    if (i === 1) { // if the first button is clicked
+      this.componentDidMount(1);
+      this.setState({ Display: 'Flow' });
+    } else if (i === 2) { // if the second button is clicked
+      this.componentDidMount(2);
+      this.setState({ Display: 'Flow' });
+    } else if (i === 3) { //if first submenu of second button is clicked
+      this.componentDidMount(3);
+      this.setState({ Display: 'Flow' });
+    }
   }
 
   /*** function for reading an uploaded file and parsing it to JSON ***/
@@ -184,6 +203,205 @@ class App extends Component {
       classes[index].Name = classID;
     }
   }
+
+
+ /*** Admin User***/
+ adminUser() {
+  return (
+    <React.Fragment>
+      <div className = 'header-options'>
+      <div className='spacer'></div>
+              <DropdownButton
+              as={ButtonGroup}
+              id="dropdown-item-button"
+              title={this.state.dropDownValue}
+              className="format"
+              variant="dark"
+              menuVariant="dark">
+            <DropdownButton
+                as={ButtonGroup}
+                id="dropdown-item-submenu-end"
+                drop={"end"}
+                title="BS in Computer Science"
+                className="format"
+                variant="dark"
+                menuVariant="dark">
+                <Dropdown.Item
+                    onClick={(e) => this.changeMajor(e.target.textContent,4)}>BS in Computer Science (Regular)
+                </Dropdown.Item>
+                  <Dropdown.Item
+                      onClick={(e) => this.changeMajor(e.target.textContent,1.1)}>BS in CS with Cybersecurity Certificate
+                  </Dropdown.Item>
+            </DropdownButton>
+            <Dropdown.Item
+                onClick={(e) => this.changeMajor(e.target.textContent,2)}>BA in Computer Science</Dropdown.Item>
+            <Dropdown.Item
+                onClick={(e) => this.changeMajor(e.target.textContent,3)}>BS in Cybersecurity</Dropdown.Item>
+          </DropdownButton>
+          <div className='spacer'></div>
+          <Button variant="success">Add New Catalog Year</Button>
+          <div className='spacer'></div>
+      </div>
+      <div class="row">
+          <div class="col-xl-3 col-sm-6 mb-xl-0 mb-3">
+          <div class="card">
+          <div class="card-header p-3 pt-2">
+          <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+{/*                     <i class="material-icons opacity-10">BSCS</i> */}
+          </div>
+          <div class="text-end pt-1">
+          <p class="text-sm mb-0 text-capitalize">BS in Computer Science</p>
+          <h4 class="mb-0">Catalog Year 2022-23</h4>
+          </div>
+          </div>
+          <hr class="dark horizontal my-0"></hr>
+          <div class="card-footer p-3">
+          <Button className= "buttonSpace" variant="success">View</Button>
+          <Button className= "buttonSpace" variant="warning">Modify</Button>
+          <Button className= "buttonSpace" variant="danger">Delete</Button>
+          </div>
+          </div>
+          </div>
+
+          <div class="col-xl-3 col-sm-6 mb-xl-0 mb-3">
+              <div class="card">
+              <div class="card-header p-3 pt-2">
+              <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+{/*                     <i class="material-icons opacity-10">BSCS</i> */}
+              </div>
+              <div class="text-end pt-1">
+              <p class="text-sm mb-0 text-capitalize">BS in Computer Science</p>
+              <h4 class="mb-0">Catalog Year 2021-22</h4>
+              </div>
+              </div>
+              <hr class="dark horizontal my-0"></hr>
+              <div class="card-footer p-3">
+              <Button className= "buttonSpace" variant="success">View</Button>
+              <Button className= "buttonSpace" variant="warning">Modify</Button>
+              <Button className= "buttonSpace" variant="danger">Delete</Button>
+              </div>
+              </div>
+              </div>
+
+              <div class="col-xl-3 col-sm-6 mb-xl-0 mb-3">
+              <div class="card">
+              <div class="card-header p-3 pt-2">
+              <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+{/*                     <i class="material-icons opacity-10">BSCS</i> */}
+              </div>
+              <div class="text-end pt-1">
+              <p class="text-sm mb-0 text-capitalize">BS in Computer Science</p>
+              <h4 class="mb-0">Catalog Year 2020-21</h4>
+              </div>
+              </div>
+              <hr class="dark horizontal my-0"></hr>
+              <div class="card-footer p-3">
+              <Button className= "buttonSpace" variant="success">View</Button>
+              <Button className= "buttonSpace" variant="warning">Modify</Button>
+              <Button className= "buttonSpace" variant="danger">Delete</Button>
+              </div>
+              </div>
+              </div>
+
+              <div class="col-xl-3 col-sm-6 mb-xl-0 mb-3">
+                  <div class="card">
+                  <div class="card-header p-3 pt-2">
+                  <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+  {/*                     <i class="material-icons opacity-10">BSCS</i> */}
+                  </div>
+                  <div class="text-end pt-1">
+                  <p class="text-sm mb-0 text-capitalize">BS in Computer Science</p>
+                  <h4 class="mb-0">Catalog Year 2019-20</h4>
+                  </div>
+                  </div>
+                  <hr class="dark horizontal my-0"></hr>
+                  <div class="card-footer p-3">
+                  <Button className= "buttonSpace" variant="success">View</Button>
+                  <Button className= "buttonSpace" variant="warning">Modify</Button>
+                  <Button className= "buttonSpace" variant="danger">Delete</Button>
+                  </div>
+                  </div>
+                  </div>
+      </div>
+      <table className='listview-table'>
+                <thead>
+                <tr>
+                  <td colSpan={3} className='heading-td'>
+                    <b>BS in Computer Science   Catalog Year 2022-23</b>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Courses</th>
+                  <th>Credits</th>
+                  <th>Notes</th>
+                </tr>
+                </thead>
+                <tbody>
+                   <tr><td class="heading-courses-td"><div class="arrow right"></div>Gen Ed: Core English Composition</td><td class="heading-credits-td">0 / 6</td><td class="heading-notes-td">Both courses are required.</td></tr>
+                </tbody>
+      </table>
+    </React.Fragment>
+  );
+}
+
+  /*** Header content being displayed for Student's flowchart and edit class webpage ***/
+  headerContent() {
+  let [takenHours, plannedHours, neededHours] = this.calculateTotalHours();
+              return (
+                <React.Fragment>
+                  <ProgressBar>
+                      <ProgressBar variant="success" now={takenHours/neededHours*100} />
+                      <ProgressBar variant="warning" now={plannedHours/neededHours*100} />
+                  </ProgressBar>
+                  <div className='header-options'>
+                      <div className="credit-count">{`${takenHours}/${neededHours} taken credits`}</div>
+                      <div className='spacer'></div>
+                      <DropdownButton
+                          as={ButtonGroup}
+                          id="dropdown-item-button"
+                          title={this.state.dropDownValue}
+                          className="format"
+                          variant="dark"
+                          menuVariant="dark">
+                        <DropdownButton
+                            as={ButtonGroup}
+                            id="dropdown-item-submenu-end"
+                            drop={"end"}
+                            title="BS in Computer Science"
+                            className="format"
+                            variant="dark"
+                            menuVariant="dark">
+                            <Dropdown.Item
+                                onClick={(e) => this.changeMajor(e.target.textContent,1)}>BS in Computer Science (Regular)
+                            </Dropdown.Item>
+                              <Dropdown.Item
+                                  onClick={(e) => this.changeMajor(e.target.textContent,1.1)}>BS in CS with Cybersecurity Certificate
+                              </Dropdown.Item>
+                        </DropdownButton>
+                        <Dropdown.Item
+                            onClick={(e) => this.changeMajor(e.target.textContent,2)}>BA in Computer Science</Dropdown.Item>
+                        <Dropdown.Item
+                            onClick={(e) => this.changeMajor(e.target.textContent,3)}>BS in Cybersecurity</Dropdown.Item>
+                      </DropdownButton>
+                      <div className='spacer'></div>
+                      <AddCustomSemester onSubmit={this.onAddSemesterSubmit} />
+                      <AddCustomClass
+                          onSubmit={this.onAddClassSubmit}
+                          // gets category names that can fill in multiple boxes on the flowchart
+                          CategoryOpts={Object.keys(this.state.Categories).filter(k => 'FC_Name' in this.state.Categories[k])}
+                      />
+                </div>
+                  <div className="flow-warn">
+                      *3000 & 4000 level CSCI courses are semester dependent. Courses may be offered
+                      more frequently as resources allow, but students cannot expect them to be
+                      offered off‐semester. Students should use the rotation shown on this flowchart
+                      as a guide for planning their upper level courses.
+                  </div>
+                </React.Fragment>
+              );
+        }
+
+
 
   /** adds the path of classes to the flowchart
   Note: this is currently releated to adding the correct science classes */
@@ -402,6 +620,9 @@ class App extends Component {
     // set content to display based on which tab the user is currently in (the mode they currently see)
     if (this.state.Display === 'Flow') {
       content = this.displayFlowChart();
+      header_content = this.headerContent();
+    } else if (this.state.Display === 'Admin') {        // if the user click Admin from Login then it opens a admin User page
+      content = this.adminUser();
     } else {
       content = this.displayEditView();
     }
@@ -442,56 +663,18 @@ class App extends Component {
               <NavDropdown.Item
                 onClick={() => this.menuClick(3)}>Computer Science BS</NavDropdown.Item>
             </NavDropdown>
+
+            <Nav.Link
+              className={(this.state.Display === 'Admin') ? 'active' : 'inactive'}
+              onClick={() => this.menuClick(4)}>Administrator</Nav.Link> 
           </Nav>
         </Navbar>
-        <ProgressBar>
-          <ProgressBar variant="success" now={takenHours/neededHours*100} />
-          <ProgressBar variant="warning" now={plannedHours/neededHours*100} />
-        </ProgressBar>
         </div>
-        <div className='header-options'>
-          <div className="credit-count">{`${takenHours}/${neededHours} taken credits`}</div>
-          <div className='spacer'></div>
-          <AddCustomSemester onSubmit={this.onAddSemesterSubmit} />
-          <AddCustomClass
-            onSubmit={this.onAddClassSubmit}
-            // gets category names that can fill in multiple boxes on the flowchart
-            CategoryOpts={Object.keys(this.state.Categories).filter(k => 'FC_Name' in this.state.Categories[k])}
-          />
-        </div>
-        <div className="flow-warn">
-          *3000 & 4000 level CSCI courses are semester dependent. Courses may be offered
-          more frequently as resources allow, but students cannot expect them to be
-          offered off‐semester. Students should use the rotation shown on this flowchart
-          as a guide for planning their upper level courses.
-        </div>
-        {content}
-        <Navbar variant='dark' bg='dark' fixed='bottom'>
-          <div>
-            <input
-              ref={this.fileUploader}
-              id="uploadFileButton"
-              accept=".json" type="file"
-              onClick={(e) => { e.target.value = '' }} // ensures uploading file with same name is done
-              onChange={(e) => this.onUploadFile(e.target.files)} />
-            <Button variant="outline-primary" id="upload-button"
-              onClick={() => this.fileUploader.current.click()}>Upload</Button>
-          </div>
-          <div className="dropzone d-none d-sm-block">
-            <Dropzone onDrop={acceptedFiles => this.onUploadFile(acceptedFiles)}>
-              {({ getRootProps, getInputProps }) => (
-                <section>
-                  <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <p>Drop your Course Dragon .json file here</p>
-                  </div>
-                </section>
-              )}
-            </Dropzone>
-          </div>
-          <Button variant="outline-primary" id="save-button" onClick={() => this.saveClick()}>Save</Button>
-          <Button variant="outline-primary" id="print-button" onClick={() => window.print()}>Print</Button>
-        </Navbar>
+          {header_content}      {/* header_content displays the changeMajor dropdown menu and other info when the user
+                                clicks either Flowchart or Edit Class or Login -> Student from the Navbar*/}
+
+          {content}
+
       </div>
     );
   }
