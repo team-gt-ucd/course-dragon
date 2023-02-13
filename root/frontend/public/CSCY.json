@@ -1,37 +1,23 @@
 {
 	"ColorOrder": [
 		"CS CORE",
-		"CS SYSTEMS CORE",
-		"CS BREADTH",
-		"CS ELECTIVE",
-		"ENGR",
+		"CYBERSECURITY CORE",
+		"CYBERSECURITY ELECTIVE",
 		"MATH",
 		"SCIENCE",
 		"GEN ED CORE"
 	],
 	"Colors": {
 		"CS CORE": "#bcd6ed",
-		"CS ELECTIVE": "#674ea7",
+		"CYBERSECURITY ELECTIVE": "#F7DC6F",
 		"SCIENCE": "#a8d08d",
 		"GEN ED CORE": "#bebebe",
 		"MATH": "#e1efd8",
-		"CS SYSTEMS CORE": "#2d74b5",
-		"CS BREADTH": "#D9BBF9",
-		"ENGR": "#F5CBA7"
-	},
-	"Colors_Credit": {
-		"CS CORE": "25",
-		"CS ELECTIVE": "15",
-		"SCIENCE": "10",
-		"GEN ED CORE": "24",
-		"MATH": "12",
-		"CS SYSTEMS CORE": "21",
-		"CS BREADTH": "18",
-		"ENGR": "3"
+		"CYBERSECURITY CORE": "#D2691E"
 	},
 	"Semesters": [
-		"Fall-1", 
-		"Spring-1", 
+		"Fall-1",
+		"Spring-1",
 		"Fall-2", 
 		"Spring-2", 
 		"Fall-3", 
@@ -53,12 +39,6 @@
 			"Color": "CS CORE"
 		},
 		{
-			"Name": "CSCI 1510",
-			"Credits": "3 hours",
-			"Semester": "Fall-1",
-			"Color": "CS SYSTEMS CORE"
-		},
-		{
 			"Name": "MATH 1401",
 			"Credits": "4 hours",
 			"Semester": "Fall-1",
@@ -68,10 +48,10 @@
 			"Name": "ENGR 1200",
 			"Credits": "3 hours",
 			"Semester": "Fall-1",
-			"Color": "ENGR"
+			"Color": "GEN ED CORE"
 		},
 		{
-			"Name": "Gen Ed Core",
+			"Name": "ENGL 1020",
 			"Credits": "3 hours",
 			"Semester": "Fall-1",
 			"Color": "GEN ED CORE"
@@ -83,25 +63,25 @@
 			"Color": "CS CORE"
 		},
 		{
-			"Name": "CSCI 2525",
+			"Name": "CSCI 2511",
 			"Credits": "3 hours",
 			"Semester": "Spring-1",
-			"Color": "CS SYSTEMS CORE"
+			"Color": "CS CORE"
 		},
 		{
-			"Name": "MATH 2411",
-			"Credits": "4 hours",
-			"Semester": "Spring-1",
-			"Color": "MATH"
-		},
-		{
-			"Name": "ENGL 1020",
+			"Name": "CSCI 2312",
 			"Credits": "3 hours",
 			"Semester": "Spring-1",
-			"Color": "GEN ED CORE"
+			"Color": "CS CORE"
 		},
 		{
-			"Name": "Gen Ed Core",
+			"Name": "CSCY 2930",
+			"Credits": "2 hours",
+			"Semester": "Spring-1",
+			"Color": "CYBERSECURITY CORE"
+		},
+		{
+			"Name": "ENGL 2030",
 			"Credits": "3 hours",
 			"Semester": "Spring-1",
 			"Color": "GEN ED CORE"
@@ -113,31 +93,31 @@
 			"Color": "CS CORE"
 		},
 		{
-			"Name": "CSCI 2511",
+			"Name": "CSCI 2525",
 			"Credits": "3 hours",
 			"Semester": "Fall-2",
 			"Color": "CS CORE"
 		},
 		{
-			"Name": "Science",
+			"Name": "MATH 2830",
+			"Credits": "3 hours",
+			"Semester": "Fall-2",
+			"Color": "MATH"
+		},
+		{
+			"Name": "Science 1",
 			"Credits": "4 hours",
 			"Semester": "Fall-2",
 			"Color": "SCIENCE"
 		},
 		{
-			"Name": "Science Lab",
+			"Name": "Science 1 Lab",
 			"Credits": "1 hour",
 			"Semester": "Fall-2",
 			"Color": "SCIENCE"
 		},
 		{
-			"Name": "ENGL 2030",
-			"Credits": "3 hours",
-			"Semester": "Fall-2",
-			"Color": "GEN ED CORE"
-		},
-		{
-			"Name": "Gen Ed Core",
+			"Name": "CU Core",
 			"Credits": "3 hours",
 			"Semester": "Fall-2",
 			"Color": "GEN ED CORE"
@@ -149,151 +129,151 @@
 			"Color": "CS CORE"
 		},
 		{
-			"Name": "CSCI 3412",
+			"Name": "CSCI 3761",
 			"Credits": "3 hours",
 			"Semester": "Spring-2",
 			"Color": "CS CORE"
 		},
 		{
-			"Name": "CSCI 3761",
+			"Name": "CSCY 3740",
 			"Credits": "3 hours",
 			"Semester": "Spring-2",
-			"Color": "CS SYSTEMS CORE"
+			"Color": "CYBERSECURITY CORE"
 		},
 		{
-			"Name": "Science",
+			"Name": "Science 2",
 			"Credits": "4 hours",
 			"Semester": "Spring-2",
 			"Color": "SCIENCE"
 		},
 		{
-			"Name": "Science",
+			"Name": "Science 2 Lab",
 			"Credits": "1 hour",
 			"Semester": "Spring-2",
 			"Color": "SCIENCE"
 		},
 		{
-			"Name": "Gen Ed Core",
+			"Name": "CU Core",
 			"Credits": "3 hours",
 			"Semester": "Spring-2",
 			"Color": "GEN ED CORE"
 		},
 		{
-			"Name": "CSCI 3415",
+			"Name": "CSCI 3412",
 			"Credits": "3 hours",
 			"Semester": "Fall-3",
-			"Color": "CS SYSTEMS CORE"
+			"Color": "CS CORE"
 		},
 		{
-			"Name": "CSCI 3453",
+			"Name": "CSCY 3765",
 			"Credits": "3 hours",
 			"Semester": "Fall-3",
-			"Color": "CS SYSTEMS CORE"
+			"Color": "CYBERSECURITY CORE"
 		},
 		{
-			"Name": "CS Breadth Choice",
+			"Name": "CSCY 4741",
 			"Credits": "3 hours",
 			"Semester": "Fall-3",
-			"Color": "CS BREADTH"
-		},
-		{
-			"Name": "CS Breadth Choice",
-			"Credits": "3 hours",
-			"Semester": "Fall-3",
-			"Color": "CS BREADTH"
+			"Color": "CYBERSECURITY CORE"
 		},
 		{
 			"Name": "Technical Elective",
 			"Credits": "3 hours",
 			"Semester": "Fall-3",
-			"Color": "CS ELECTIVE"
+			"Color": "CYBERSECURITY ELECTIVE"
 		},
 		{
-			"Name": "CSCI 3508",
+			"Name": "ENGR 3400",
+			"Credits": "3 hours",
+			"Semester": "Fall-3",
+			"Color": "GEN ED CORE"
+		},
+		{
+			"Name": "CSCI 3453",
 			"Credits": "3 hours",
 			"Semester": "Spring-3",
 			"Color": "CS CORE"
 		},
 		{
-			"Name": "CS Breadth Choice",
+			"Name": "CSCY 4742",
 			"Credits": "3 hours",
 			"Semester": "Spring-3",
-			"Color": "CS BREADTH"
+			"Color": "CYBERSECURITY CORE"
+		},
+		{
+			"Name": "CSCY 4743",
+			"Credits": "3 hours",
+			"Semester": "Spring-3",
+			"Color": "CYBERSECURITY CORE"
 		},
 		{
 			"Name": "Technical Elective",
 			"Credits": "3 hours",
 			"Semester": "Spring-3",
-			"Color": "CS ELECTIVE"
+			"Color": "CYBERSECURITY ELECTIVE"
 		},
 		{
-			"Name": "MATH 3195",
-			"Credits": "4 hours",
-			"Semester": "Spring-3",
-			"Color": "MATH"
-		},
-		{
-			"Name": "Gen Ed Core",
+			"Name": "ENGR 3600",
 			"Credits": "3 hours",
 			"Semester": "Spring-3",
 			"Color": "GEN ED CORE"
 		},
 		{
-			"Name": "CSCI 4034",
+			"Name": "CSCY 4738",
 			"Credits": "3 hours",
 			"Semester": "Fall-4",
-			"Color": "CS CORE"
+			"Color": "CYBERSECURITY CORE"
 		},
 		{
-			"Name": "CSCI 4738",
+			"Name": "CSCY 4772",
 			"Credits": "3 hours",
 			"Semester": "Fall-4",
-			"Color": "CS BREADTH"
-		},
-		{
-			"Name": "CS Breadth Choice",
-			"Credits": "3 hours",
-			"Semester": "Fall-4",
-			"Color": "CS BREADTH"
-		},
-		{
-			"Name": "CSCI 4551",
-			"Credits": "3 hours",
-			"Semester": "Fall-4",
-			"Color": "CS SYSTEMS CORE"
+			"Color": "CYBERSECURITY CORE"
 		},
 		{
 			"Name": "Technical Elective",
 			"Credits": "3 hours",
 			"Semester": "Fall-4",
-			"Color": "CS ELECTIVE"
+			"Color": "CYBERSECURITY ELECTIVE"
 		},
 		{
-			"Name": "CSCI 4591",
+			"Name": "CU CORE",
 			"Credits": "3 hours",
-			"Semester": "Spring-4",
-			"Color": "CS SYSTEMS CORE"
+			"Semester": "Fall-4",
+			"Color": "GEN ED CORE"
+		},
+		{
+			"Name": "Technical Elective",
+			"Credits": "3 hours",
+			"Semester": "Fall-4",
+			"Color": "CYBERSECURITY ELECTIVE"
 		},
 		{
 			"Name": "CSCI 4739",
 			"Credits": "3 hours",
 			"Semester": "Spring-4",
-			"Color": "CS BREADTH"
+			"Color": "CYBERSECURITY CORE"
 		},
 		{
-			"Name": "CS Breadth Choice",
+			"Name": "CSCY 4407",
 			"Credits": "3 hours",
 			"Semester": "Spring-4",
-			"Color": "CS BREADTH"
+			"Color": "CYBERSECURITY CORE"
+		},
+		{
+			"Name": "CSCY 4950",
+			"Credits": "3 hours",
+			"Semester": "Spring-4",
+			"Color": "CYBERSECURITY CORE"
 		},
 		{
 			"Name": "Technical Elective",
 			"Credits": "3 hours",
 			"Semester": "Spring-4",
-			"Color": "CS ELECTIVE"
+			"Color": "CYBERSECURITY ELECTIVE"
 		},
 		{
-			"Name": "Gen Ed Core",
+			"Name": "CU CORE",
 			"Credits": "3 hours",
 			"Semester": "Spring-4",
 			"Color": "GEN ED CORE"
