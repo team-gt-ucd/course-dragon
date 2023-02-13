@@ -16,7 +16,7 @@ function StatusButtons(props) {
           <ToggleButton
             id={"tbg-btn-1" + props.uniqueKey}
             value = {'Taken'}
-            variant = {'outline-success'}
+            variant = {'success'}
             size="sm"
           >
             Taken
@@ -24,7 +24,7 @@ function StatusButtons(props) {
         <ToggleButton
             id={"tbg-btn-2" + props.uniqueKey}
             value = {'Planned'}
-            variant = {'outline-warning'}
+            variant = {'warning'}
             size="sm"
         >
           Planned

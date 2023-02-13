@@ -403,8 +403,34 @@ thead {
   margin-top: 10px;
 }
 
+
 /*** Status Button Styling ***/
 .custom-toggle-buttons {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 0px;
+  margin-right: 2px;
+}
+/* Nima */
+.collapsible .content {
+  padding: 6px;
+  background-color: #eeeeee;
+}
+.collapsible .header {
+  background-color: #dddddd;
+  padding: 6px;
+  cursor: pointer;
+}
+
+
+.row{
+  padding: 10px 15px 20px;
+}
+
+.buttonSpace{
+  margin-left: 15px;
+}
+
+.addYear{
+  padding-top: 30px;
+  padding-left: 30px;
+  padding-button: 30px;
 }
