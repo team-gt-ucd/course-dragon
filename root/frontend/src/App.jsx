@@ -55,6 +55,46 @@ class App extends Component {
       showAlert: ['success', 'Semester added to flowchart. Drag any classes into the new semester.'], 
       Semesters: [...this.state.Semesters, semester] 
     });
+    /*/ 
+      This is where the "Add Semseter" API call exists 
+    /*/
+
+    // Use the split() function to split the string into an array
+    // based on the '-' delimiter
+    var semesterArray = semester.split('-');
+    // Store the first element of the array (i.e., "Summer") as lowercase into a variable
+    var season = semesterArray[0].toLowerCase();
+    // Store the second element of the array (i.e., "1") into a variable and cast it to an integer
+    var number = parseInt(semesterArray[1]);
+
+    console.log(season)
+    console.log("\n")
+    console.log(number)
+    console.log("\n")
+
+    let apiURL = "http://localhost:4001/semester"
+    let jsonReq = {
+        "term": `${season}`,
+        "year": number,
+        "Courses_list": []
+    }
+    fetch(apiURL, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(jsonReq),
+      mode: 'cors'
+    }).then( (response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      console.log("hot dog, ", response)
+      return response.json();
+    }).then( (res) => {
+      //localStorage.setItem('username', data.username);
+      //localStorage.setItem('token', res.token);
+      console.log("got here, ", res);
+      //dispatch(userLoggedIn(data.username));
+    }).catch( (e) => console.error(e) );
   }
 
   /*** when user submits new information for a custom class (called by AddCustomClass) ***/
@@ -453,8 +493,7 @@ class App extends Component {
           <div className="credit-count">{`${takenHours}/${neededHours} taken credits`}</div>
           <div className='spacer'></div>
           <AddCustomSemester onSubmit={this.onAddSemesterSubmit} />
-          <AddCustomClass
-            onSubmit={this.onAddClassSubmit}
+          <AddCustomClass onSubmit={this.onAddClassSubmit}
             // gets category names that can fill in multiple boxes on the flowchart
             CategoryOpts={Object.keys(this.state.Categories).filter(k => 'FC_Name' in this.state.Categories[k])}
           />
