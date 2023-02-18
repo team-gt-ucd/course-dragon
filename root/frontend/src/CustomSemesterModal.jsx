@@ -16,6 +16,9 @@ function AddCustomSemester(props) {
     setButtonStatus(!(/^\s*\d+\s*$/.test(semesterYear) && semesterType !== ''));
   });
 
+  /* Simple function that retrieves the current year */
+  const currentYear = new Date().getFullYear();
+
   // functions that handle open/close
   const handleShow = () => { setShow(true); };
   const handleClose = () => {
@@ -46,7 +49,7 @@ function AddCustomSemester(props) {
         <Modal.Body>
           <Form>
             <Form.Group className="custom-class-form">
-            <Form.Label>Semester:</Form.Label>
+              <Form.Label>Semester:</Form.Label>
               <Form.Select value={semesterType}
                 onChange={e => { setSemesterType(e.target.value); }}>
                 <option key='defaultoption' value=''>Select a category</option>
@@ -57,7 +60,7 @@ function AddCustomSemester(props) {
               <Form.Label>Year:</Form.Label>
               <Form.Control
                 id='semesterYear'
-                placeholder="3"
+                placeholder={currentYear}
                 onChange={e => { setSemesterYear(e.target.value); }} />
             </Form.Group>
           </Form>

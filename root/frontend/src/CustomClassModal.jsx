@@ -8,11 +8,17 @@ import StatusButtons from './StatusButtons';
 function AddCustomClass(props) {
   // setting state using functional react syntax
   const [show, setShow] = useState(false); // show / hide modal itself
+  const [semesterYear, setSemesterYear] = useState('');
+  const [semesterType, setSemesterType] = useState('');
   const [classNameValue, setClassNameValue] = useState('');
+  const [classDescription, setClassDescription] = useState('');
   const [creditNumValue, setCreditNumValue] = useState('');
   const [classCategoryValue, setClassCategoryValue] = useState('');
   const [buttonStatus, setButtonStatus] = useState(true); // if submit button disabled
   const [checked, setChecked] = useState([]); // which taken/planned buttons are selected
+
+  /* Simple function that retrieves the current year */
+  const currentYear = new Date().getFullYear();
 
   /* on button change, change "checked" so that it highlights the correct buttons */
   const handleButtonChange = (selectedValue) => {
@@ -21,9 +27,9 @@ function AddCustomClass(props) {
   }
 
   useEffect(() => { // runs after every render (state changes) -- adjusts if submit button disabled
-    setButtonStatus(!(classNameValue.length > 0 && creditNumValue.length > 0
-      && /^\d+$/.test(creditNumValue) && /^\s*[A-Z]{4}(.*)[\d]{4}\s*$/.test(classNameValue)
-      && classCategoryValue !== '' && checked.length > 0));
+    setButtonStatus(!(semesterType !== '' && semesterYear.length > 0 && /^\d+$/.test(semesterYear) 
+      && classNameValue.length > 0 && creditNumValue.length > 0 && /^\d+$/.test(creditNumValue) 
+      && /^\s*[A-Z]{4}(.*)[\d]{4}\s*$/.test(classNameValue) && classCategoryValue !== '' && checked.length > 0));
   });
 
   // functions that handle open/close
@@ -32,7 +38,10 @@ function AddCustomClass(props) {
     setShow(false);
     // reset all values for the next time the modal is opened
     setButtonStatus(true);
+    setSemesterYear('');
+    setSemesterType('');
     setClassNameValue('');
+    setClassDescription('');
     setCreditNumValue('');
     setClassCategoryValue('');
     setChecked([]);
@@ -42,12 +51,13 @@ function AddCustomClass(props) {
     handleClose(); // close modal on submit
     // pass information for new class to function passed from App.jsx to update state
     props.onSubmit({ 
-      Id: classNameValue,
-      Name: "Custom Class",
-      Credits: creditNumValue + " Credits",
-      Desc: "",
-      Fulfills: classCategoryValue,
-      Prereqs: []
+      id: classNameValue,
+      description: classDescription,
+      year: semesterYear,
+      season: semesterType,
+      credits: creditNumValue + " Credits",
+      fulfills: classCategoryValue,
+      // instructorScoreList: []
     }, checked[0]); // pass status to onsubmit method
   }
 
@@ -57,7 +67,6 @@ function AddCustomClass(props) {
       <Button variant="dark" onClick={handleShow}>
         Add Custom Class
       </Button>
-
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Add Custom Class</Modal.Title>
@@ -65,16 +74,46 @@ function AddCustomClass(props) {
         <Modal.Body>
           <Form>
             <Form.Group className="custom-class-form">
+              
+              {/* Year Field */}
+              <Form.Label>Year:</Form.Label>
+              <Form.Control
+                id='semesterYear'
+                placeholder={currentYear}
+                onChange={e => { setSemesterYear(e.target.value); }} />
+
+              {/* Semester Dropdown */}
+              <Form.Label>Semester:</Form.Label>
+              <Form.Select value={semesterType}
+                onChange={e => { setSemesterType(e.target.value); }}>
+                <option key='defaultoption' value=''>Select a category</option>
+                <option key='summeroption' value='Summer'>Summer</option>
+                <option key='falloption' value='Fall'>Fall</option>
+                <option key='springoption' value='Spring'>Spring</option>
+              </Form.Select>
+
+              {/* Class Name Field */}
               <Form.Label>Class Name:</Form.Label>
               <Form.Control
                 id='className'
-                placeholder="CSCI 1001"
+                placeholder="CSCI 1410"
                 onChange={e => { setClassNameValue(e.target.value.toUpperCase()); }} /> 
+
+              {/* Class Description Field */}
+              <Form.Label>Class Description:</Form.Label>
+              <Form.Control
+                id='classDescription'
+                placeholder="Custom course description..."
+                onChange={e => { setClassDescription(e.target.value); }} /> 
+
+              {/* Credit Field */}
               <Form.Label>Credit Amount:</Form.Label>
               <Form.Control
                 id='creditNum'
                 placeholder="3"
                 onChange={e => { setCreditNumValue(e.target.value); }} />
+
+              {/* Category Dropdown */}
               <Form.Label>Class Category:</Form.Label>
               <Form.Select value={classCategoryValue}
                 onChange={e => { setClassCategoryValue(e.target.value); }}>

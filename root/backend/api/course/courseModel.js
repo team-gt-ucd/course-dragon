@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { creditsSchema } from '../credits/creditsModel.js';
 import { instructorScoreSchema } from '../instructor-score/instructorScoreModel.js';
+
 export const courseSchema = mongoose.Schema({
     term: {
         type: String,
