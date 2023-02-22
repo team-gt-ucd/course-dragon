@@ -10,15 +10,13 @@ function AddCustomClass(props) {
   const [show, setShow] = useState(false); // show / hide modal itself
   const [semesterYear, setSemesterYear] = useState('');
   const [semesterType, setSemesterType] = useState('');
-  const [classNameValue, setClassNameValue] = useState('');
+  const [classIdValue, setClassIdValue] = useState('');
+  const [classTitle, setClassTitleValue] = useState('');
   const [classDescription, setClassDescription] = useState('');
   const [creditNumValue, setCreditNumValue] = useState('');
   const [classCategoryValue, setClassCategoryValue] = useState('');
   const [buttonStatus, setButtonStatus] = useState(true); // if submit button disabled
   const [checked, setChecked] = useState([]); // which taken/planned buttons are selected
-
-  /* Simple function that retrieves the current year */
-  const currentYear = new Date().getFullYear();
 
   /* on button change, change "checked" so that it highlights the correct buttons */
   const handleButtonChange = (selectedValue) => {
@@ -28,8 +26,8 @@ function AddCustomClass(props) {
 
   useEffect(() => { // runs after every render (state changes) -- adjusts if submit button disabled
     setButtonStatus(!(semesterType !== '' && semesterYear.length > 0 && /^\d+$/.test(semesterYear) 
-      && classNameValue.length > 0 && creditNumValue.length > 0 && /^\d+$/.test(creditNumValue) 
-      && /^\s*[A-Z]{4}(.*)[\d]{4}\s*$/.test(classNameValue) && classCategoryValue !== '' && checked.length > 0));
+      && classIdValue.length > 0 && classTitle.length > 0 && creditNumValue.length > 0 && /^\d+$/.test(creditNumValue) 
+      && /^\s*[A-Z]{4}(.*)[\d]{4}\s*$/.test(classIdValue) && classCategoryValue !== '' && checked.length > 0));
   });
 
   // functions that handle open/close
@@ -40,7 +38,8 @@ function AddCustomClass(props) {
     setButtonStatus(true);
     setSemesterYear('');
     setSemesterType('');
-    setClassNameValue('');
+    setClassIdValue('');
+    setClassTitleValue('');
     setClassDescription('');
     setCreditNumValue('');
     setClassCategoryValue('');
@@ -51,13 +50,14 @@ function AddCustomClass(props) {
     handleClose(); // close modal on submit
     // pass information for new class to function passed from App.jsx to update state
     props.onSubmit({ 
-      id: classNameValue,
+      id: classIdValue, // changed from `classNameValue`
+      title: classTitle,
       description: classDescription,
       year: semesterYear,
       season: semesterType,
       credits: creditNumValue + " Credits",
       fulfills: classCategoryValue,
-      // instructorScoreList: []
+      instructorScoreList: []
     }, checked[0]); // pass status to onsubmit method
   }
 
@@ -79,7 +79,7 @@ function AddCustomClass(props) {
               <Form.Label>Year:</Form.Label>
               <Form.Control
                 id='semesterYear'
-                placeholder={currentYear}
+                placeholder='1'
                 onChange={e => { setSemesterYear(e.target.value); }} />
 
               {/* Semester Dropdown */}
@@ -92,12 +92,19 @@ function AddCustomClass(props) {
                 <option key='springoption' value='Spring'>Spring</option>
               </Form.Select>
 
-              {/* Class Name Field */}
-              <Form.Label>Class Name:</Form.Label>
+              {/* Class ID Field */}
+              <Form.Label>Course ID:</Form.Label>
               <Form.Control
                 id='className'
                 placeholder="CSCI 1410"
-                onChange={e => { setClassNameValue(e.target.value.toUpperCase()); }} /> 
+                onChange={e => { setClassIdValue(e.target.value.toUpperCase()); }} /> 
+
+              {/* Class Title Field */}
+              <Form.Label>Class Title:</Form.Label>
+              <Form.Control
+                id='classTitle'
+                placeholder="Fundamentals of Computing"
+                onChange={e => { setClassTitleValue(e.target.value); }} /> 
 
               {/* Class Description Field */}
               <Form.Label>Class Description:</Form.Label>

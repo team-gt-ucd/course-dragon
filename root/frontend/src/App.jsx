@@ -143,18 +143,9 @@ class App extends Component {
       courseStatus = false;
     }
 
-    console.log(classPrefix)
-    console.log("\n")
-    console.log(classCode)
-    console.log("\n")
-    console.log(credits)
-    console.log("\n")
-    console.log(courseStatus)
-    console.log("\n")
-
     let apiURL = "http://localhost:4001/course"
     let jsonReq = {
-      "course_title": "Custom Class",
+      "course_title": newClassObj.title,
       "course_subject": classPrefix,
       "course_code": classCode,
       "year": newClassObj.year,
@@ -177,13 +168,9 @@ class App extends Component {
       if (!response.ok) {
         throw Error(response.statusText);
       }
-      console.log("hot dog, ", response)
+      console.log("Received response from the server for CreateCustomCourse: ", response)
+      console.log("Course object info: ", response.json());
       return response.json();
-    }).then( (res) => {
-      //localStorage.setItem('username', data.username);
-      //localStorage.setItem('token', res.token);
-      console.log("got here, ", res);
-      //dispatch(userLoggedIn(data.username));
     }).catch( (e) => console.error(e) );
 
   }

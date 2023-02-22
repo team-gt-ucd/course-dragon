@@ -1,9 +1,6 @@
 import mongoose from 'mongoose';
 import { courseSchema } from '../course/courseModel.js';
 
-/* Simple function that retrieves the current year */
-const currentYear = new Date().getFullYear();
-
 export const semesterSchema = mongoose.Schema({
     term: {
         type: String,
@@ -12,9 +9,9 @@ export const semesterSchema = mongoose.Schema({
     },
     year: {
         type: Number,
-        min: [1973, 'Please enter a valid year'],
-        max: [3000, 'Please enter a valid year'],
-        default: {currentYear}
+        min: [1, 'Please enter a valid year'],
+        max: [100, 'Please enter a valid year'],
+        default: 1
     },
     Courses_list: [courseSchema]
 })
