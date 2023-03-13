@@ -19,8 +19,8 @@ function FlowChart(props) {
   const calculateSemHours = classList => {
     let [total, taken] = [0, 0];
     for (let cl of classList) {
-      total += parseInt(cl.Credits);
-      taken += cl.taken ? parseInt(cl.cl.Credits) : 0; // if taken add to count
+      total += parseInt(cl.Credits.credits_count);
+      taken += cl.taken ? parseInt(cl.Credits.credits_count) : 0; // if taken add to count
     }
     return [taken, total];
   }
@@ -29,23 +29,66 @@ function FlowChart(props) {
   const byColor = (a, b) => props.ColorOrder.indexOf(a) - props.ColorOrder.indexOf(b);
 
   // maps each color to a div to be displayed 
-  let legend = Object.entries(props.Colors).sort((a, b) => byColor(a[0], b[0])).map(([name, color]) => (
-    <div
-      key={'legend' + name}
-      className="flow-box-legend"
-      style={{
-        backgroundColor: color, 
-        color: isDarkBackground(color) ? "#000000" : "#ffffff"
-      }}>
-      {name}
-    </div>
-  ));
+  // let legend = Object.entries(props.Colors).sort((a, b) => byColor(a[0], b[0])).map(([name, color]) => (
+  //   <div
+  //     key={'legend' + name}
+  //     className="flow-box-legend"
+  //     style={{
+  //       backgroundColor: color, 
+  //       color: isDarkBackground(color) ? "#000000" : "#ffffff"
+  //     }}>
+  //     {name}
+  //   </div>
+  // ));
+
+  function groupByYear(arr) {
+    const result = {};
+    
+    arr.forEach((obj) => {
+      const year = obj.year;
+      
+      if (!result[year]) {
+        result[year] = [];
+      }
+      
+      result[year].push(obj);
+    });
+    
+    return result;
+  }  
+
+  function sortByYear(myObj) {
+    const sortedObj = Object.keys(myObj)
+    .sort((a, b) => Number(a) - Number(b))
+    .reduce((result, key) => {
+      result[key] = myObj[key];
+      return result;
+    }, {});
+
+    return sortedObj;
+  }
 
   // get classes grouped by semester (using global function)
-  let semClasses = Object.fromEntries(props.Semesters.map(s => [s, []]));
-  semClasses = {...semClasses, ...groupBy(props.Classes, x => x.Semester)};
-  // get classes grouped by semester to be grouped by year
-  let yearSems = groupBy(Object.entries(semClasses), x => x[0].split('-')[1]);
+  // let semClasses = Object.fromEntries(props.Semesters.map(s => [s, []]));
+  // semClasses = {...semClasses, ...groupBy(props.Classes, x => x.Semester)};
+  // // get classes grouped by semester to be grouped by year
+  // let yearSems = groupBy(Object.entries(semClasses), x => x[0].split('-')[1]);
+  let yearSems = addIndexesToCourses(sortByYear(groupByYear(props.Semesters)));
+
+  function addIndexesToCourses(Semester_list) {
+    if(JSON.stringify(Semester_list) === '{}') {
+      return Semester_list;
+    }
+    let i = 0;
+    for (const year in Semester_list) {
+      for (const semester in Semester_list[year]) {
+        for (const course in Semester_list[year][semester].Courses_list) {
+          Object.assign(Semester_list[year][semester].Courses_list[course], {index: i++});
+        }
+      }
+    }
+    return Semester_list;
+  };
   // returns html for entire flowchart 
   return (
     <React.Fragment>
@@ -72,15 +115,15 @@ function FlowChart(props) {
                   <Row className='sem-classes'>{
                     /* sort the semesters alphabetically, so that Fall always comes before Spring
                     uses map to loop and extract semester string in 'sem' and list of classes in 'classes'*/
-                    sems.sort((a, b) => -compareSemesters(a[0], b[0])).map(([sem, classes]) => (
-                      <Droppable key={sem} droppableId={sem}>
+                    sems.map(sem => (
+                      <Droppable key={`${sem.term}-${sem.year}`} droppableId={`${sem.term}-${sem.year}`}>
                         {(provided) => (
                         /* Col: column tag, imported from bootstrap-react 
                         key attribute is used as a unique identifier for an item in a list in react */
                         <Col {...provided.droppableProps} ref={provided.innerRef} md={6} xs={6} className='semcol'>
-                        <div className='sem-header'>{sem.split('-')[0]}</div>
-                        <div className='sem-credits'>{calculateSemHours(classes).join(' / ') + ' credits taken'}</div>
-                        {classes.sort((a,b) => byColor(a.Color, b.Color)).map((cl, i) => (
+                        <div className='sem-header'>{sem.term}</div>
+                        <div className='sem-credits'>{calculateSemHours(sem.Courses_list).join(' / ') + ' credits taken'}</div>
+                        {sem.Courses_list.map((cl, i) => (
                           /* used <Droppable> tag to identify area where classes can be placed (surrounded around each semester columns), <Draggable> tag to identify the classes that can be dragged. link to implementing drag and drop: https://www.freecodecamp.org/news/how-to-add-drag-and-drop-in-react-with-react-beautiful-dnd/*/
                           <Draggable key={cl.index.toString()} draggableId={cl.index.toString()} index={i}>
                             {(provided) => (
@@ -89,8 +132,8 @@ function FlowChart(props) {
                               <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>   
                                 <FlowChartItem 
                                   {...cl}
-                                  isPreReq={curPrereqs.includes(cl.Name)}
-                                  enterFunc={() => setPrereqs((!!cl.cl && !!cl.cl.Prereqs) ? cl.cl.Prereqs : [])}
+                                  isPreReq={curPrereqs.includes(`${cl.course_subject} ${cl.course_code}`)}
+                                  enterFunc={() => setPrereqs((!!cl && !!cl.prerequisites_list) ? cl.prerequisites_list : [])}
                                   leaveFunc={() => setPrereqs([])}
                                   displayAll={displayAll}
                                 ></FlowChartItem>
@@ -109,7 +152,7 @@ function FlowChart(props) {
           </DragDropContext>
         </Row>
         <div className="flow-legend">
-          {legend}
+                              {/* {legend} */}
         </div>
       </Container>
     </React.Fragment>
