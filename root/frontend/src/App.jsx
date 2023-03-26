@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 import { compareSemesters } from './functions.js';
 import ListView from './ListView.jsx';
 import FlowChart from './FlowChart.jsx';
 import AddCustomClass from './CustomClassModal.jsx';
 import DismissableAlert from './DismissableAlert.jsx';
+import Admin from './Admin.jsx';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Nav from 'react-bootstrap/Nav';
@@ -14,14 +16,21 @@ import Dropzone from 'react-dropzone';
 import AddCustomSemester from './CustomSemesterModal';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import LoginButton from './LoginButton.jsx'
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Dropdown from 'react-bootstrap/Dropdown';
+import {DropdownButton} from "react-bootstrap";
 
-class App extends Component {
+
+class App extends React.Component
+{
   constructor(props) {
     super(props);
     this.state = {
       Display: 'Flow', // determines which page to display
       // information from json file
       Colors: {},
+      Colors_ID:[],
+      Colors_Credit: {},
       Categories: {},
       Semesters: [],
       Classes: [],
@@ -31,20 +40,30 @@ class App extends Component {
       PlannedClasses: [],
       displayAll: false, // checkbox to display all information on the flowchart is clicked
       showAlert: [null, null], // to display alert, holds [Bootstrap type (to color - warn/error), Message]
-      AddedClasses: [] // store ids of user-added-classes to save in file 
+      AddedClasses: [], // store ids of user-added-classes to save in file
+      dropDownValue: "Choose a Major"
     };
     // https://stackoverflow.com/questions/64420345/how-to-click-on-a-ref-in-react
     this.fileUploader = React.createRef(); // ref to upload file dialog
   }
 
   /*** when component mounts, load data from json, set state with information ***/
-  componentDidMount() { // runs when component loads
-    fetch('csreqs.json') // get file at csreqs.json asyncronously
+  componentDidMount(i) {
+    var i, fileName = 'csreqs.json';
+    if(i === 1)
+    {fileName = 'csreqs.json';}
+    else if (i === 2)
+    {fileName = 'BACS.json'}
+    else if (i === 3)
+    {fileName = 'CSCY.json'}
+
+    fetch(fileName) // get file at csreqs.json asyncronously
       .then(response => response.text())
       .then(json => JSON.parse(json))
       .then(data => this.setState(data)) // set state information
       .catch(e => console.error('Couldn\'t read json file. The error was:\n', e)); // print any errors
-  }
+    return;
+}
 
   onAddSemesterSubmit = (semester) => {
     if (this.state.Semesters.includes(semester)) {
@@ -82,7 +101,6 @@ class App extends Component {
       AddedClasses: [...this.state.AddedClasses, newClassObj.Id]
     });
   }
-
   /*** function for handling a click on one of the top navbar links ***/
   menuClick(i) {
     if (i === 0) { // if the first button is clicked
@@ -93,6 +111,24 @@ class App extends Component {
       this.setState({ Display: 'EditGenEd' });
     } else if (i == 3) { //if second submenu of second button is clicked
       this.setState({ Display: 'EditCS' });
+    }
+    else if (i == 4) { //if second submenu of second button is clicked
+          this.setState({ Display: 'Admin' });
+        }
+  }
+
+    // New code by Nima
+  changeMajor(text, i) {
+    this.setState({dropDownValue: text})
+    if (i === 1) { // if the first button is clicked
+      this.componentDidMount(1);
+      this.setState({ Display: 'Flow' });
+    } else if (i === 2) { // if the second button is clicked
+      this.componentDidMount(2);
+      this.setState({ Display: 'Flow' });
+    } else if (i === 3) { //if first submenu of second button is clicked
+      this.componentDidMount(3);
+      this.setState({ Display: 'Flow' });
     }
   }
 
@@ -184,6 +220,73 @@ class App extends Component {
       classes[index].Name = classID;
     }
   }
+
+  
+ /*** Admin User***/
+ adminUser() {
+  // let newClassDesc = Object.entries(this.state.ClassDesc).map(([courseID, item]) => ({
+  //   ...item,
+  //   Id: courseID,
+  //   // pass function to component: https://reactjs.org/docs/faq-functions.html
+  //   takenFunc: () => this.markClassTaken(courseID),
+  //   plannedFunc: () => this.markClassPlanned(courseID),
+  //   // variable used to keep boxes checked when switch between views
+  //   checked: this.state.TakenClasses.includes(courseID) ? 'Taken' : (this.state.PlannedClasses.includes(courseID) ? 'Planned' : null)
+  // }));
+  return (
+    <React.Fragment>
+    <Admin />
+    </React.Fragment>
+  );
+}
+
+
+  /*** Header content being displayed for Student's flowchart and edit class webpage ***/
+  headerContent() {
+  let [takenHours, plannedHours, neededHours] = this.calculateTotalHours();
+              return (
+                <React.Fragment>
+                  <ProgressBar>
+                      <ProgressBar variant="success" now={takenHours/neededHours*100} />
+                      <ProgressBar variant="warning" now={plannedHours/neededHours*100} />
+                  </ProgressBar>
+                  <div className='header-options'>
+                      <div className="credit-count">{`${takenHours}/${neededHours} taken credits`}</div>
+                      <div className='spacer'></div>
+                      <DropdownButton
+                          as={ButtonGroup}
+                          id="dropdown-item-button"
+                          title={this.state.dropDownValue}
+                          className="format"
+                          variant="dark"
+                          menuVariant="dark">
+                        <Dropdown.Item
+                                onClick={(e) => this.changeMajor(e.target.textContent,1)}>BS in Computer Science
+                            </Dropdown.Item>
+                        <Dropdown.Item
+                            onClick={(e) => this.changeMajor(e.target.textContent,2)}>BA in Computer Science</Dropdown.Item>
+                        <Dropdown.Item
+                            onClick={(e) => this.changeMajor(e.target.textContent,3)}>BS in Cybersecurity</Dropdown.Item>
+                      </DropdownButton>
+                      <div className='spacer'></div>
+                      <AddCustomSemester onSubmit={this.onAddSemesterSubmit} />
+                      <AddCustomClass
+                          onSubmit={this.onAddClassSubmit}
+                          // gets category names that can fill in multiple boxes on the flowchart
+                          CategoryOpts={Object.keys(this.state.Categories).filter(k => 'FC_Name' in this.state.Categories[k])}
+                      />
+                </div>
+                  <div className="flow-warn">
+                      *3000 & 4000 level CSCI courses are semester dependent. Courses may be offered
+                      more frequently as resources allow, but students cannot expect them to be
+                      offered offâ€semester. Students should use the rotation shown on this flowchart
+                      as a guide for planning their upper level courses.
+                  </div>
+                </React.Fragment>
+              );
+        }
+
+
 
   /** adds the path of classes to the flowchart
   Note: this is currently releated to adding the correct science classes */
@@ -399,11 +502,16 @@ class App extends Component {
   /*** render function under App class is used to tell application to display content ***/
   render() {
     let content; // variable to store the content to render
+    let header_content;     // variable to store the header content to render on Student's flowchart and edit class page
     // set content to display based on which tab the user is currently in (the mode they currently see)
     if (this.state.Display === 'Flow') {
       content = this.displayFlowChart();
+      header_content = this.headerContent();
+    } else if (this.state.Display === 'Admin') {        // if the user click Admin from Login then it opens a admin User page
+      content = this.adminUser();
     } else {
       content = this.displayEditView();
+      header_content = this.headerContent();
     }
     let [takenHours, plannedHours, neededHours] = this.calculateTotalHours();
 
@@ -428,9 +536,7 @@ class App extends Component {
             </Nav.Link>
             <Nav.Link
               className={(this.state.Display === 'Flow') ? 'active' : 'inactive'}
-              onClick={() => this.menuClick(0)}>
-                Flowchart
-            </Nav.Link>
+              onClick={() => this.menuClick(0)}>Flowchart</Nav.Link>
             <NavDropdown
               className={((this.state.Display.startsWith('Edit')) ? 'active' : 'inactive')}
               onClick={() => this.menuClick(1)}
@@ -442,59 +548,23 @@ class App extends Component {
               <NavDropdown.Item
                 onClick={() => this.menuClick(3)}>Computer Science BS</NavDropdown.Item>
             </NavDropdown>
+
+            <Nav.Link
+              className={(this.state.Display === 'Admin') ? 'active' : 'inactive'}
+              onClick={() => this.menuClick(4)}>Administrator</Nav.Link> 
+
           </Nav>
         </Navbar>
-        <ProgressBar>
-          <ProgressBar variant="success" now={takenHours/neededHours*100} />
-          <ProgressBar variant="warning" now={plannedHours/neededHours*100} />
-        </ProgressBar>
         </div>
-        <div className='header-options'>
-          <div className="credit-count">{`${takenHours}/${neededHours} taken credits`}</div>
-          <div className='spacer'></div>
-          <AddCustomSemester onSubmit={this.onAddSemesterSubmit} />
-          <AddCustomClass
-            onSubmit={this.onAddClassSubmit}
-            // gets category names that can fill in multiple boxes on the flowchart
-            CategoryOpts={Object.keys(this.state.Categories).filter(k => 'FC_Name' in this.state.Categories[k])}
-          />
-        </div>
-        <div className="flow-warn">
-          *3000 & 4000 level CSCI courses are semester dependent. Courses may be offered
-          more frequently as resources allow, but students cannot expect them to be
-          offered off‐semester. Students should use the rotation shown on this flowchart
-          as a guide for planning their upper level courses.
-        </div>
-        {content}
-        <Navbar variant='dark' bg='dark' fixed='bottom'>
-          <div>
-            <input
-              ref={this.fileUploader}
-              id="uploadFileButton"
-              accept=".json" type="file"
-              onClick={(e) => { e.target.value = '' }} // ensures uploading file with same name is done
-              onChange={(e) => this.onUploadFile(e.target.files)} />
-            <Button variant="outline-primary" id="upload-button"
-              onClick={() => this.fileUploader.current.click()}>Upload</Button>
-          </div>
-          <div className="dropzone d-none d-sm-block">
-            <Dropzone onDrop={acceptedFiles => this.onUploadFile(acceptedFiles)}>
-              {({ getRootProps, getInputProps }) => (
-                <section>
-                  <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <p>Drop your Course Dragon .json file here</p>
-                  </div>
-                </section>
-              )}
-            </Dropzone>
-          </div>
-          <Button variant="outline-primary" id="save-button" onClick={() => this.saveClick()}>Save</Button>
-          <Button variant="outline-primary" id="print-button" onClick={() => window.print()}>Print</Button>
-        </Navbar>
+          {header_content}      {/* header_content displays the changeMajor dropdown menu and other info when the user
+                                clicks either Flowchart or Edit Class or Login -> Student from the Navbar*/}
+
+          {content}
       </div>
     );
   }
+
 }
+
 
 export default App;
