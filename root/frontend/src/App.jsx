@@ -357,12 +357,26 @@ class App extends Component {
   handleOnDragEnd = (result) => {
     this.setState( { showAlert: [null, null] } );
     if (!result.destination) return; // bounds checking: make sure doesn't go out of list
+    
+    let copySemester_list = this.state.Semester_list.slice(); // duplicate list for re-rendering
+    let source = result.source.droppableId.split('-');
+    let destination = result.destination.droppableId.split('-');
+    
+    const [reorderedItem] = copySemester_list.find(semester => {
+      return semester.term === source[0] && semester.year === +source[1]; // this gets the specific semester that the class is being dragged from
+    }).Courses_list.splice(result.source.index, 1); // this removes the class from the list of classes in that semester and stores it to be placed in the destination list
+    
+    copySemester_list.find(s => {
+      return s.term === destination[0] && s.year === +destination[1]; // this gets the specific semester that the class is being dragged to
+    }).Courses_list.splice(result.destination.index, 0, reorderedItem); // this adds the class to the destination list
+    
+    this.setState({ Semester_list: copySemester_list }, () => { // Replace the old Semester_list with the newly reordered one
+       console.log(`Dragging ${reorderedItem.course_subject} ${reorderedItem.course_code}: ${reorderedItem.course_title} from ${source[0]}-${source[1]} to ${destination[0]}-${destination[1]}`);
+    });
+
     // check for prereqs: (current assumption is that all prereqs are included in the core classes)
     
     return;
-
-    let newClasses = this.state.Classes.slice(); // duplicate list for re-rendering
-
     //obtain the class name of the class being dragged
     let classDragged = newClasses[parseInt(result.draggableId)].Name;
 
