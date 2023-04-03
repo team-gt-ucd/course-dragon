@@ -520,6 +520,7 @@ class App extends React.Component
     // the {content} segment indicates that the html code from the variable above should be inserted
     // react bootstrap nav dropdown menu link: https://react-bootstrap.github.io/components/dropdowns/
     return (
+      
       <div className="App">
         {/* General Alert function, allows us to show success/fail of a file upload, class restrictions, etc. */}
         <DismissableAlert
@@ -561,6 +562,7 @@ class App extends React.Component
 
           {content}
       </div>
+    
     );
   }
 

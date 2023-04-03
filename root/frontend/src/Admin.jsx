@@ -24,7 +24,23 @@ function Admin() {
     const [show, setShow] = useState(false);
     const [catalogYear, setCatalogYear] = useState('');
     const [degree, setDegree] = useState('');
-  
+
+    const handleSelectDegree = (event) => {
+      const selectedRow = event.target.closest("tr");
+      const selectedDegree = event.target.value;
+    
+      // Remove the "highlighted" class from all rows except the selected one
+      const rows = document.querySelectorAll("tbody tr");
+      rows.forEach((row) => {
+        if (row !== selectedRow) {
+          row.classList.remove("table_highlight");
+        }
+      });
+      // Add the "highlighted" class to the selected row
+      selectedRow.classList.add("table_highlight");
+      setDegree(selectedDegree);
+    };
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
   
@@ -47,7 +63,7 @@ function Admin() {
     return (
         <div>
         
-        <DropdownButton
+        {/* <DropdownButton
         as={ButtonGroup}
         id="dropdown-item-button"
         title={degree || "Select a major"}
@@ -64,11 +80,39 @@ function Admin() {
         <Dropdown.Item onClick={(e) => setDegree("BS in Cybersecurity")}>
           BS in Cybersecurity
         </Dropdown.Item>
-      </DropdownButton>
+      </DropdownButton> */}
+      <div className="table-responsive">
+      <table className="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>MAJOR</th>
+            <th>CAREER</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>BS in Computer Science</td>
+            <td>Undergraduate</td>
+            <td><Button variant="outline-success" value="BS in Computer Science" onClick={handleSelectDegree}>Select</Button></td>
+          </tr>
+          <tr>
+            <td>BA in Computer Science</td>
+            <td>Undergraduate</td>
+            <td><Button variant="outline-success" value="BA in Computer Science" onClick={handleSelectDegree}>Select</Button></td>
+          </tr>
+          <tr>
+            <td>BS in Cybersecurity</td>
+            <td>Undergraduate</td>
+            <td><Button variant="outline-success" value="BS in Cybersecurity" onClick={handleSelectDegree}>Select</Button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
       <hr className="my-4" />
         {degree && (
           <>
-            <Button variant="success" onClick={handleShow}>
+            <Button variant="success" onClick={handleShow} style={{ margin: '0 0 20px 0',position: 'fixed',right: '20px',}}>
               Add Catalog Year
             </Button>
             <Modal show={show} onHide={handleClose}>

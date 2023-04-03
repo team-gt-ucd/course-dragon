@@ -408,3 +408,50 @@ thead {
   margin-left: 10px;
   margin-right: 10px;
 }
+
+/*** Admin.jsx table styling ***/
+.table {
+  width: 88%;
+  max-width: 88%;
+  margin: 1rem 2rem 0rem 4rem;
+  background-color: #EEEEEE;
+}
+
+.table-bordered {
+  border: 1px solid #000000;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(1, 247, 75, 0.075);
+}
+
+.table td{
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid #000000;
+}
+.table th {
+  color: #EEEEEE;
+  padding: 0.75rem;
+  vertical-align: top;
+  border: 1px solid #EEEEEE;
+  background-color: #212121;
+  
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #000000;
+}
+
+.table tbody + tbody {
+  border-top: 2px solid #fffcfc;
+}
+
+.table_highlight{
+  background-color: rgb(150, 238, 150);
+}
+
+.buttonSpace{
+  margin-left:10px;
+}
