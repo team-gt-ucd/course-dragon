@@ -3,10 +3,9 @@ import mongoose from "mongoose";
 
 // Define schema for catalog item
 export const catalogSchema = mongoose.Schema({
-    id: { type: mongoose.Schema.Types.ObjectId, required: true, default: mongoose.Types.ObjectId },
     degree: String,
     catalogYear: String
-  })
+  },{timestamps: true})
   
 
 // Define model for catalog item

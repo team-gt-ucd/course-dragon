@@ -29,4 +29,32 @@ export const addCatalog = async (req, res) => {
   }
 };
 
+export const deleteCatalog = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).send(`No catalog with id: ${id}`);
+
+  await CatalogItem.findByIdAndRemove(id);
+
+  res.json({ message: "Catalog deleted successfully." });
+};
+
+
+// Controller function to get all catalog items
+export const getCatalog = async (req, res) => {
+  try {
+    // Find all catalog items in the database
+    const catalogItems = await CatalogItem.find();
+    // Send the catalog items as a JSON response
+    res.json(catalogItems);
+  } catch (error) {
+    console.error(`Error getting catalog items: ${error}`);
+    // Send an error response to the client
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
+
 export default router;

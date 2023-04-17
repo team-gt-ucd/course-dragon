@@ -1,5 +1,5 @@
 import { groupBy, isDarkBackground, compareSemesters } from './functions.js';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -46,15 +46,18 @@ function Admin() {
   
     const [catalogItems, setCatalogItems] = useState([]);
   
-    // const createCatalogItem = () => {
-    //   setCatalogItems([...catalogItems, {
-    //     id: catalogItems.length + 1,
-    //     degree: degree,
-    //     catalogYear: catalogYear,
-    //   }]);
-    //   setCatalogYear('');
-    //   handleClose();
-    // };
+    useEffect(() => {
+      // fetch the catalog items from the server
+      fetch('http://localhost:4001/add-catalog/')
+        .then(response => response.json())
+        .then(data => {
+          setCatalogItems(data);
+        })
+        .catch(error => {
+          console.error('Error fetching catalog items:', error);
+        });
+    }, []);
+  
     const createCatalogItem = () => {
       let apiURL = "http://localhost:4001/add-catalog/"
       // Validate that degree and catalogYear fields are not empty
@@ -62,8 +65,15 @@ function Admin() {
         console.log('Degree and Catalog Year are required');
         return;
       }
+      //make sure that there is no duplicate catalog year for the specific degree 
+      const existingItem = catalogItems.find(item => item.catalogYear === catalogYear && item.degree === degree);
+      if (existingItem) {
+        alert(`A catalog item for ${degree} ${catalogYear} already exists.`);
+        return;
+      }
+
     
-        // create the new catalog item object
+      // create the new catalog item object
       let newItem = {
         "degree": degree,
         "catalogYear": catalogYear
@@ -76,29 +86,59 @@ function Admin() {
         body: JSON.stringify(newItem),
         mode: 'cors'
       })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((savedItem) => {
+        //add the new item to the catalogItems state
+        setCatalogItems([...catalogItems, savedItem]);
+        //clear the catalogYear state and close the modal
+        setCatalogYear('');
+        handleClose();
+    
+        // Display a success message to the user
+        //alert(`Catalog item with ID ${savedItem._id} has been created successfully.`);
+      })
+      .catch((error) => {
+        console.error(`Error creating catalog item: ${error}. Degree: ${degree}, Catalog Year: ${catalogYear}`);
+        // Display an error message to the user
+        alert(`Error creating catalog item for ${degree} ${catalogYear}. Please try again later.`);
+      });
+    };
+    
+    // deleting the catalog item
+    const deleteCatalogItem = (id) => {
+      let apiURL = `http://localhost:4001/add-catalog/${id}`;
+    
+      // send a DELETE request to the server to delete the item
+      fetch(apiURL, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        mode: 'cors'
+      })
         .then((response) => {
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           return response.json();
         })
-        .then((res) => {
-          // // add the new item to the catalogItems state
-          // setCatalogItems([...catalogItems, data]);
-          // // clear the catalogYear state and close the modal
-          setCatalogYear('');
-          handleClose();
+        .then(() => {
+          // remove the deleted item from the catalogItems state
+          setCatalogItems(catalogItems.filter((item) => item._id !== id));
+          // Display a success message to the user
+          //alert(`Catalog item with ID ${id} has been deleted successfully.`);
         })
         .catch((error) => {
-          console.error(`Error creating catalog item: ${error}. Degree: ${degree}, Catalog Year: ${catalogYear}`);
+          console.error(`Error deleting catalog item: ${error}. ID: ${id}`);
           // Display an error message to the user
-          alert(`Error creating catalog item for ${degree} ${catalogYear}. Please try again later.`);
+          alert(`Error deleting catalog item with ID ${id}. Please try again later.`);
         });
     };
     
-    const deleteCatalogItem = (id) => {
-        setCatalogItems(catalogItems.filter((item) => item.id !== id));
-      };
+    
   
     return (
         <div>
@@ -183,7 +223,7 @@ function Admin() {
                       <Button className="buttonSpace" variant="warning">
                         Modify
                       </Button>
-                      <Button className="buttonSpace" variant="danger" onClick={() => deleteCatalogItem(item.id)}>
+                      <Button className="buttonSpace" variant="danger" onClick={() => deleteCatalogItem(item._id)}>
                         Delete
                       </Button>
                     </div>
