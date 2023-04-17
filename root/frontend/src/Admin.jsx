@@ -46,16 +46,56 @@ function Admin() {
   
     const [catalogItems, setCatalogItems] = useState([]);
   
+    // const createCatalogItem = () => {
+    //   setCatalogItems([...catalogItems, {
+    //     id: catalogItems.length + 1,
+    //     degree: degree,
+    //     catalogYear: catalogYear,
+    //   }]);
+    //   setCatalogYear('');
+    //   handleClose();
+    // };
     const createCatalogItem = () => {
-      setCatalogItems([...catalogItems, {
-        id: catalogItems.length + 1,
-        degree: degree,
-        catalogYear: catalogYear,
-      }]);
-      setCatalogYear('');
-      handleClose();
+      let apiURL = "http://localhost:4001/add-catalog/"
+      // Validate that degree and catalogYear fields are not empty
+      if (!degree || !catalogYear) {
+        console.log('Degree and Catalog Year are required');
+        return;
+      }
+    
+        // create the new catalog item object
+      let newItem = {
+        "degree": degree,
+        "catalogYear": catalogYear
+      };
+    
+      // send a POST request to the server to save the new item
+      fetch(apiURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newItem),
+        mode: 'cors'
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((res) => {
+          // // add the new item to the catalogItems state
+          // setCatalogItems([...catalogItems, data]);
+          // // clear the catalogYear state and close the modal
+          setCatalogYear('');
+          handleClose();
+        })
+        .catch((error) => {
+          console.error(`Error creating catalog item: ${error}. Degree: ${degree}, Catalog Year: ${catalogYear}`);
+          // Display an error message to the user
+          alert(`Error creating catalog item for ${degree} ${catalogYear}. Please try again later.`);
+        });
     };
-
+    
     const deleteCatalogItem = (id) => {
         setCatalogItems(catalogItems.filter((item) => item.id !== id));
       };
@@ -63,24 +103,6 @@ function Admin() {
     return (
         <div>
         
-        {/* <DropdownButton
-        as={ButtonGroup}
-        id="dropdown-item-button"
-        title={degree || "Select a major"}
-        className="format"
-        variant="dark"
-        menuVariant="dark"
-      >
-        <Dropdown.Item onClick={(e) => setDegree("BS in Computer Science")}>
-          BS in Computer Science
-        </Dropdown.Item>
-        <Dropdown.Item onClick={(e) => setDegree("BA in Computer Science")}>
-          BA in Computer Science
-        </Dropdown.Item>
-        <Dropdown.Item onClick={(e) => setDegree("BS in Cybersecurity")}>
-          BS in Cybersecurity
-        </Dropdown.Item>
-      </DropdownButton> */}
       <div className="table-responsive">
       <table className="table table-bordered table-hover">
         <thead>
@@ -176,3 +198,16 @@ function Admin() {
   }
 
 export default Admin;
+
+// const express = require('express');
+// const catalogRouter = require('./addCatalog');
+
+// const app = express();
+
+// app.use(express.json());
+
+// app.use('/api', catalogRouter);
+
+// app.listen(3001, () => {
+//   console.log('Server started on port 3001');
+// });
