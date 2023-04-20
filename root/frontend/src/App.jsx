@@ -31,7 +31,12 @@ class App extends Component {
       PlannedClasses: [],
       displayAll: false, // checkbox to display all information on the flowchart is clicked
       showAlert: [null, null], // to display alert, holds [Bootstrap type (to color - warn/error), Message]
-      AddedClasses: [] // store ids of user-added-classes to save in file 
+      AddedClasses: [], // store ids of user-added-classes to save in file 
+      Semester_list: [],
+      catalog_year: null,
+      credits_needed_by_category: [],
+      major: "BLANK",
+      total_credits_needed: null
     };
     // https://stackoverflow.com/questions/64420345/how-to-click-on-a-ref-in-react
     this.fileUploader = React.createRef(); // ref to upload file dialog
@@ -39,12 +44,46 @@ class App extends Component {
 
   /*** when component mounts, load data from json, set state with information ***/
   componentDidMount() { // runs when component loads
-    fetch('csreqs.json') // get file at csreqs.json asyncronously
-      .then(response => response.text())
-      .then(json => JSON.parse(json))
-      .then(data => this.setState(data)) // set state information
-      .catch(e => console.error('Couldn\'t read json file. The error was:\n', e)); // print any errors
+    let degreeMapID = "63fe3b560c4e5570172b1842"
+    let apiURL = `http://localhost:4001/degree-map/${degreeMapID}`
+    fetch(apiURL, {method: 'GET', mode: 'cors'}) // get file at csreqs.json asyncronously
+      .then(response => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.text()
+      })
+      .then(json => {
+        return JSON.parse(json)
+      })
+      .then(data => {
+        console.log(`Received response from the server for get ID's(${degreeMapID}) DegreeMap, `, data);
+        this.setState(this.generateColors(data.Semester_list));
+
+        return this.setState(data)
+      })// set state information
+      .catch(e => console.error('Couldn\'t get Degree Map json file. The error was:\n', e)); // print any errors
   }
+
+  generateColors = (Semester_list) => {
+    let colors = {};
+    Semester_list.forEach(semester => {
+      semester.Courses_list.forEach(course => {
+        colors[course.Credits.category] = this.getRandomColor();
+      })
+    });
+    return { Colors: colors };
+  }
+
+  getRandomColor = () => {
+    let letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
 
   onAddSemesterSubmit = (semester) => {
     if (this.state.Semesters.includes(semester)) {
@@ -94,6 +133,27 @@ class App extends Component {
     } else if (i == 3) { //if second submenu of second button is clicked
       this.setState({ Display: 'EditCS' });
     }
+  }
+
+  getDegreeMaps() {
+    let apiURL = "http://localhost:4001/degree-map/"
+    fetch(apiURL, {
+      method: 'GET',
+      //headers: {'Content-Type':'application/json'},
+      //body: JSON.stringify(jsonReq),
+      mode: 'cors'
+    }).then( (response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+
+      console.log("Received response from the server for get all DegreeMaps, ", response);
+      return response.json();
+    }).then( (json) => {
+      console.log("Response from server: ", json);
+    }).catch( (error) => {
+      console.log("Error: ", error);
+    })
   }
 
   /*** function for reading an uploaded file and parsing it to JSON ***/
@@ -214,7 +274,14 @@ class App extends Component {
 
   /*** Get flowchart with populated classes ***/
   getFlowchartWithClasses() {
-    let classes = JSON.parse(JSON.stringify(this.state.Classes)); // deep copy object
+    let classes = [];
+    this.state.Semester_list.forEach(semester => {
+      semester.Courses_list.forEach(course => {
+        classes.push(course);
+      })
+    });
+    return classes;
+    //let classes = JSON.parse(JSON.stringify(this.state.Classes)); // deep copy object
     let classesToAdd = {};
     let catCreds = {};
     Object.keys(this.state.Categories).forEach(k => catCreds[k] = 0);
@@ -286,26 +353,6 @@ class App extends Component {
   }
 
   /*** creates list/edit view with list of classes to choose ***/
-  displayEditView() {
-    // create new list of class descriptions with functions 
-    // and whether or not the box should be checked for passing to the list view
-    let newClassDesc = Object.entries(this.state.ClassDesc).map(([courseID, item]) => ({
-      ...item,
-      Id: courseID,
-      // pass function to component: https://reactjs.org/docs/faq-functions.html
-      takenFunc: () => this.markClassTaken(courseID),
-      plannedFunc: () => this.markClassPlanned(courseID),
-      // variable used to keep boxes checked when switch between views
-      checked: this.state.TakenClasses.includes(courseID) ? 'Taken' : (this.state.PlannedClasses.includes(courseID) ? 'Planned' : null)
-    }));
-    return (
-      <ListView
-        displayChoice={this.state.Display}
-        ClassDesc={newClassDesc}
-        Categories={this.state.Categories}>
-      </ListView>
-    );
-  }
 
   /*** checks if the prereqs have been violated for a class ***/
   prereqsViolated(newClasses, curClassID, curSemester) {
@@ -332,10 +379,26 @@ class App extends Component {
   handleOnDragEnd = (result) => {
     this.setState( { showAlert: [null, null] } );
     if (!result.destination) return; // bounds checking: make sure doesn't go out of list
+    
+    let copySemester_list = this.state.Semester_list.slice(); // duplicate list for re-rendering
+    let source = result.source.droppableId.split('-');
+    let destination = result.destination.droppableId.split('-');
+    
+    const [reorderedItem] = copySemester_list.find(semester => {
+      return semester.term === source[0] && semester.year === +source[1]; // this gets the specific semester that the class is being dragged from
+    }).Courses_list.splice(result.source.index, 1); // this removes the class from the list of classes in that semester and stores it to be placed in the destination list
+    
+    copySemester_list.find(s => {
+      return s.term === destination[0] && s.year === +destination[1]; // this gets the specific semester that the class is being dragged to
+    }).Courses_list.splice(result.destination.index, 0, reorderedItem); // this adds the class to the destination list
+    
+    this.setState({ Semester_list: copySemester_list }, () => { // Replace the old Semester_list with the newly reordered one
+       console.log(`Dragging ${reorderedItem.course_subject} ${reorderedItem.course_code}: ${reorderedItem.course_title} from ${source[0]}-${source[1]} to ${destination[0]}-${destination[1]}`);
+    });
+
     // check for prereqs: (current assumption is that all prereqs are included in the core classes)
     
-    let newClasses = this.state.Classes.slice(); // duplicate list for re-rendering
-
+    return;
     //obtain the class name of the class being dragged
     let classDragged = newClasses[parseInt(result.draggableId)].Name;
 
@@ -372,26 +435,12 @@ class App extends Component {
 
   /*** creates flow chart view with all classes ***/
   displayFlowChart() {
-    // create new list of classes with all class descriptions needed
-    // along with color and whether or not it's been taken
-    let classesWithSelected = this.getFlowchartWithClasses();
-    let classInfo = classesWithSelected.map((cl, i) => ({
-      ...cl,
-      cl: this.state.ClassDesc[cl.Name],
-      bgCol: this.state.Colors[cl.Color],
-      taken: this.state.TakenClasses.includes(cl.Name),
-      planned: this.state.PlannedClasses.includes(cl.Name),
-      warnPrereqs: cl.warnPrereqs || this.prereqsViolated(classesWithSelected, cl.Name, cl.Semester),
-      index: i // property for drag and drop
-    }));
     // pass handleOnDragEnd for changing state when class dragged
     return (
       <FlowChart
-        Semesters={this.state.Semesters}
-        Classes={classInfo}
-        ColorOrder={this.state.ColorOrder}
-        Colors={this.state.Colors}
-        onDragEnd={this.handleOnDragEnd}>
+        Semesters={this.state.Semester_list}
+        onDragEnd={this.handleOnDragEnd}
+        Colors={this.state.Colors}>
       </FlowChart>
     );
   }
@@ -402,8 +451,6 @@ class App extends Component {
     // set content to display based on which tab the user is currently in (the mode they currently see)
     if (this.state.Display === 'Flow') {
       content = this.displayFlowChart();
-    } else {
-      content = this.displayEditView();
     }
     let [takenHours, plannedHours, neededHours] = this.calculateTotalHours();
 
@@ -424,6 +471,9 @@ class App extends Component {
           <Navbar.Brand> <img src="src/dragonlogo.png" height="50px" width="50px"></img>Course Dragon</Navbar.Brand>
           <Nav>
             <Nav.Link>
+              <Button onClick={() => this.getDegreeMaps()}>Get all Degree Maps </Button>
+            </Nav.Link>
+            <Nav.Link>
               <LoginButton/>
             </Nav.Link>
             <Nav.Link
@@ -431,17 +481,6 @@ class App extends Component {
               onClick={() => this.menuClick(0)}>
                 Flowchart
             </Nav.Link>
-            <NavDropdown
-              className={((this.state.Display.startsWith('Edit')) ? 'active' : 'inactive')}
-              onClick={() => this.menuClick(1)}
-              title="Edit Classes" id="basic-nav-dropdown"
-              menuVariant="dark"
-              align="end">
-              <NavDropdown.Item
-                onClick={() => this.menuClick(2)}>General Ed Classes</NavDropdown.Item>
-              <NavDropdown.Item
-                onClick={() => this.menuClick(3)}>Computer Science BS</NavDropdown.Item>
-            </NavDropdown>
           </Nav>
         </Navbar>
         <ProgressBar>

@@ -9,7 +9,7 @@ export const courseSchema = mongoose.Schema({
     },
     year: {
         type: Number,
-        min: [1973, 'Please enter a valid year'],
+        min: [1, 'Please enter a valid year'],
         max: [3000, 'Please enter a valid year']
     },
     course_subject: {
@@ -25,12 +25,12 @@ export const courseSchema = mongoose.Schema({
     course_title: {
         type: String,
         minLength: 2,
-        maxLength: 30,
+        maxLength: 100,
     },
     course_description: {
         type: String,
         minLength: 1,
-        maxLength: 200
+        maxLength: 1000
     },
     Credits: creditsSchema,
     taken: {
