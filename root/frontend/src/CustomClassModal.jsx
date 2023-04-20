@@ -3,13 +3,18 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import StatusButtons from './StatusButtons';
+import "./FlowChart";
 
 /*** Function to create a modal to add a custom class ***/
 function AddCustomClass(props) {
+  const {autoSemInfo} = props;
+  // Split the autoSemInfo string using the '-' character and extract the semester
+  const autoSemester = autoSemInfo.split('-')[0];
+  // Split the autoSemInfo string using the '-' character and extract the year
+  const autoYear = autoSemInfo.split('-')[1];
+  
   // setting state using functional react syntax
   const [show, setShow] = useState(false); // show / hide modal itself
-  const [semesterYear, setSemesterYear] = useState('');
-  const [semesterType, setSemesterType] = useState('');
   const [classIdValue, setClassIdValue] = useState('');
   const [classTitle, setClassTitleValue] = useState('');
   const [classDescription, setClassDescription] = useState('');
@@ -25,8 +30,7 @@ function AddCustomClass(props) {
   }
 
   useEffect(() => { // runs after every render (state changes) -- adjusts if submit button disabled
-    setButtonStatus(!(semesterType !== '' && semesterYear.length > 0 && /^\d+$/.test(semesterYear) 
-      && classIdValue.length > 0 && classTitle.length > 0 && creditNumValue.length > 0 && /^\d+$/.test(creditNumValue) 
+    setButtonStatus(!(classIdValue.length > 0 && classTitle.length > 0 && creditNumValue.length > 0 && /^\d+$/.test(creditNumValue) 
       && /^\s*[A-Z]{4}(.*)[\d]{4}\s*$/.test(classIdValue) && classCategoryValue !== '' && checked.length > 0));
   });
 
@@ -36,8 +40,6 @@ function AddCustomClass(props) {
     setShow(false);
     // reset all values for the next time the modal is opened
     setButtonStatus(true);
-    setSemesterYear('');
-    setSemesterType('');
     setClassIdValue('');
     setClassTitleValue('');
     setClassDescription('');
@@ -50,11 +52,11 @@ function AddCustomClass(props) {
     handleClose(); // close modal on submit
     // pass information for new class to function passed from App.jsx to update state
     props.onSubmit({ 
-      id: classIdValue, // changed from `classNameValue`
+      id: classIdValue,
       title: classTitle,
       description: classDescription,
-      year: semesterYear,
-      season: semesterType,
+      year: autoYear, // Auto fills 'year' property in the API call
+      season: autoSemester, // Auto fills 'season' property in the API call
       credits: creditNumValue + " Credits",
       fulfills: classCategoryValue,
       instructorScoreList: []
@@ -63,34 +65,19 @@ function AddCustomClass(props) {
 
   // create Modal with form
   return (
-    <div className="custom-class-button">
-      <Button variant="dark" onClick={handleShow}>
-        Add Custom Class
+    <div className="dial-button-container">
+      <Button className="dial-button" onClick={handleShow}>
+        +
       </Button>
+
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add Custom Class</Modal.Title>
+          <Modal.Title>Add Custom Class - {autoSemester} {autoYear}</Modal.Title>
         </Modal.Header>
+        
         <Modal.Body>
           <Form>
             <Form.Group className="custom-class-form">
-              
-              {/* Year Field */}
-              <Form.Label>Year:</Form.Label>
-              <Form.Control
-                id='semesterYear'
-                placeholder='1'
-                onChange={e => { setSemesterYear(e.target.value); }} />
-
-              {/* Semester Dropdown */}
-              <Form.Label>Semester:</Form.Label>
-              <Form.Select value={semesterType}
-                onChange={e => { setSemesterType(e.target.value); }}>
-                <option key='defaultoption' value=''>Select a category</option>
-                <option key='summeroption' value='Summer'>Summer</option>
-                <option key='falloption' value='Fall'>Fall</option>
-                <option key='springoption' value='Spring'>Spring</option>
-              </Form.Select>
 
               {/* Class ID Field */}
               <Form.Label>Course ID:</Form.Label>
@@ -124,17 +111,19 @@ function AddCustomClass(props) {
               <Form.Label>Class Category:</Form.Label>
               <Form.Select value={classCategoryValue}
                 onChange={e => { setClassCategoryValue(e.target.value); }}>
-                <option key='defaultoption' value=''>Select a category</option>
-                {/* create list of options based on categories this class could fulfill
+                  <option key='defaultoption' value=''>Select a category</option>
+                  {/* create list of options based on categories this class could fulfill
                   (passed up from main state in app.jsx) */
-                  props.CategoryOpts.map((opt, i) =>
-                  (<option key={'option' + i} value={opt}>{opt}</option>))}
-              </Form.Select>
+                  props.CategoryOpts ? props.CategoryOpts.map((opt, i) =>
+                  (<option key={'option' + i} value={opt}>{opt}</option>)) : null}
+                </Form.Select>
               <Form.Label className='taken-label'>Status: </Form.Label>
               <StatusButtons checked={checked} handleButtonChange={handleButtonChange} uniqueKey='Custom'></StatusButtons>
             </Form.Group>
           </Form>
+          
         </Modal.Body>
+
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close

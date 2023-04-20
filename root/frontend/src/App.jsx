@@ -479,6 +479,8 @@ class App extends Component {
     // pass handleOnDragEnd for changing state when class dragged
     return (
       <FlowChart
+        Categories={this.state.Categories}
+        onAddClassSubmit={this.onAddClassSubmit}
         Semesters={this.state.Semesters}
         Classes={classInfo}
         ColorOrder={this.state.ColorOrder}
@@ -545,10 +547,6 @@ class App extends Component {
           <div className="credit-count">{`${takenHours}/${neededHours} taken credits`}</div>
           <div className='spacer'></div>
           <AddCustomSemester onSubmit={this.onAddSemesterSubmit} />
-          <AddCustomClass onSubmit={this.onAddClassSubmit}
-            // gets category names that can fill in multiple boxes on the flowchart
-            CategoryOpts={Object.keys(this.state.Categories).filter(k => 'FC_Name' in this.state.Categories[k])}
-          />
         </div>
         <div className="flow-warn">
           *3000 & 4000 level CSCI courses are semester dependent. Courses may be offered
