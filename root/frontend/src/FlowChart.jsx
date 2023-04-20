@@ -26,20 +26,20 @@ function FlowChart(props) {
   }
 
   // convenient function to allow for easy ordering by color (when passed to the sortby function)
-  const byColor = (a, b) => props.ColorOrder.indexOf(a) - props.ColorOrder.indexOf(b);
+  //const byColor = (a, b) => props.ColorOrder.indexOf(a) - props.ColorOrder.indexOf(b);
 
   // maps each color to a div to be displayed 
-  // let legend = Object.entries(props.Colors).sort((a, b) => byColor(a[0], b[0])).map(([name, color]) => (
-  //   <div
-  //     key={'legend' + name}
-  //     className="flow-box-legend"
-  //     style={{
-  //       backgroundColor: color, 
-  //       color: isDarkBackground(color) ? "#000000" : "#ffffff"
-  //     }}>
-  //     {name}
-  //   </div>
-  // ));
+  let legend = Object.entries(props.Colors).map(([name, color]) => (
+    <div
+      key={'legend' + name}
+      className="flow-box-legend"
+      style={{
+        backgroundColor: color, 
+        color: isDarkBackground(color) ? "#000000" : "#ffffff"
+      }}>
+      {name}
+    </div>
+  ));
 
   function groupByYear(arr) {
     const result = {};
@@ -153,7 +153,7 @@ function FlowChart(props) {
           </DragDropContext>
         </Row>
         <div className="flow-legend">
-                              {/* {legend} */}
+                              {legend}
         </div>
       </Container>
     </React.Fragment>
