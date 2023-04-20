@@ -87,13 +87,10 @@ class App extends Component {
       if (!response.ok) {
         throw Error(response.statusText);
       }
-      console.log("hot dog, ", response)
+      console.log("Recieved response from the server for new semester", response)
       return response.json();
     }).then( (res) => {
-      //localStorage.setItem('username', data.username);
-      //localStorage.setItem('token', res.token);
-      console.log("got here, ", res);
-      //dispatch(userLoggedIn(data.username));
+      console.log("Semester JSON: ", res);
     }).catch( (e) => console.error(e) );
 
   }
