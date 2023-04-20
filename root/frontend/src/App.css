@@ -64,7 +64,11 @@ body {
 
 /*** Navbar styling ***/
 .navbar-brand {
-  margin-left: 5vw;
+  margin-left: 3vw;
+}
+
+.navbar-brand img {
+  margin-right: 2vw;
 }
 
 .navbar-nav {
