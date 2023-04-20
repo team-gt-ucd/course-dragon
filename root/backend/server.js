@@ -14,6 +14,7 @@ import instructorScoreRoutes from "./api/instructor-score/instructorScoreRoutes.
 import semesterRoutes from "./api/semester/semesterRoutes.js"
 import degreeMapRoutes from "./api/degree-map/degreeMapRoutes.js"
 import addCatalogRoutes from "./api/admin/addCatalogRoutes.js"
+import userRoute from "./api/users/userRoute.js"
 //Load config
 dotenv.config({ path: "./config/config.env" });
 
@@ -39,6 +40,7 @@ app.use("/instructor-score", instructorScoreRoutes);
 app.use("/semester", semesterRoutes);
 app.use("/degree-map", degreeMapRoutes);
 app.use("/add-catalog", addCatalogRoutes);
+app.use("/user", userRoute);
 // example of a route defined here
 /*app.get("/", (req, res) => {
   res.send("employee backende erisildi");
