@@ -132,6 +132,7 @@ function FlowChart(props) {
                               <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>   
                                 <FlowChartItem 
                                   {...cl}
+                                  color={props.Colors[cl.Credits.category]}
                                   isPreReq={curPrereqs.includes(`${cl.course_subject} ${cl.course_code}`)}
                                   enterFunc={() => setPrereqs((!!cl && !!cl.prerequisites_list) ? cl.prerequisites_list : [])}
                                   leaveFunc={() => setPrereqs([])}

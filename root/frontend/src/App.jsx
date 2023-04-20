@@ -58,10 +58,32 @@ class App extends Component {
       })
       .then(data => {
         console.log(`Received response from the server for get ID's(${degreeMapID}) DegreeMap, `, data);
+        this.setState(this.generateColors(data.Semester_list));
+
         return this.setState(data)
       })// set state information
       .catch(e => console.error('Couldn\'t get Degree Map json file. The error was:\n', e)); // print any errors
   }
+
+  generateColors = (Semester_list) => {
+    let colors = {};
+    Semester_list.forEach(semester => {
+      semester.Courses_list.forEach(course => {
+        colors[course.Credits.category] = this.getRandomColor();
+      })
+    });
+    return { Colors: colors };
+  }
+
+  getRandomColor = () => {
+    let letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
 
   onAddSemesterSubmit = (semester) => {
     if (this.state.Semesters.includes(semester)) {
@@ -417,7 +439,8 @@ class App extends Component {
     return (
       <FlowChart
         Semesters={this.state.Semester_list}
-        onDragEnd={this.handleOnDragEnd}>
+        onDragEnd={this.handleOnDragEnd}
+        Colors={this.state.Colors}>
       </FlowChart>
     );
   }

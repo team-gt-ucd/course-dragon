@@ -27,14 +27,14 @@ function FlowChartItem(props) {
         </Popover.Body>
       </Popover>}>
       <div style={{
-        backgroundColor: '#a8d08d',
-        color: isDarkBackground('#a8d08d') ? "#000000" : "#ffffff"
+        backgroundColor: props.color,
+        color: isDarkBackground(props.color) ? "#000000" : "#ffffff"
       }}
-        className={'flow-box ' + classStatus + (props.prerequisites_list.length > 0 ? ' pre-reqs' : '') /* add css-styling classes to box based on if taken or planned, or if prereq */}
+        className={'flow-box ' + classStatus/* + (props.prerequisites_list.length > 0 ? ' pre-reqs' : '')*/ /* add css-styling classes to box based on if taken or planned, or if prereq */}
         onMouseEnter={props.enterFunc /* calls change function passed as property when user hovers over a class */}
         onMouseLeave={props.leaveFunc}>
         <div className='flow-header'>
-          {classStatus !== '' && <div className='flow-icon'></div>}
+          {/*classStatus !== '' && <div className='flow-icon'></div>*/}
           <div className='flow-id'>{`${props.course_subject} ${props.course_code}`}</div>
         </div>
         <div className='flow-credits'>{props.Credits.credits_count + " hours"}</div>
