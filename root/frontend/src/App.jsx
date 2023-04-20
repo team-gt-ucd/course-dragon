@@ -154,27 +154,6 @@ class App extends Component {
     }
   }
 
-  getDegreeMaps() {
-    let apiURL = "http://localhost:4001/degree-map/"
-    fetch(apiURL, {
-      method: 'GET',
-      //headers: {'Content-Type':'application/json'},
-      //body: JSON.stringify(jsonReq),
-      mode: 'cors'
-    }).then( (response) => {
-      if (!response.ok) {
-        throw Error(response.statusText);
-      }
-
-      console.log("Received response from the server for get all DegreeMaps, ", response);
-      return response.json();
-    }).then( (json) => {
-      console.log("Response from server: ", json);
-    }).catch( (error) => {
-      console.log("Error: ", error);
-    })
-  }
-
   /*** function for reading an uploaded file and parsing it to JSON ***/
   onUploadFile(files) {
     let reader = new FileReader();
@@ -487,11 +466,8 @@ class App extends Component {
         </DismissableAlert>
         <div className='sticky-top'>
         <Navbar variant='dark' bg='dark'>
-          <Navbar.Brand> <img src="src/dragonlogo.png" height="50px" width="50px"></img>Course Dragon</Navbar.Brand>
+          <Navbar.Brand> <img src="public/Logo1.png" height="50px" width="50px"></img>Course Dragon</Navbar.Brand>
           <Nav>
-            <Nav.Link>
-              <Button onClick={() => this.getDegreeMaps()}>Get all Degree Maps </Button>
-            </Nav.Link>
             <Nav.Link>
               <LoginButton/>
             </Nav.Link>
@@ -524,7 +500,7 @@ class App extends Component {
           as a guide for planning their upper level courses.
         </div>
         {content}
-        <Navbar variant='dark' bg='dark' fixed='bottom'>
+        {/* <Navbar variant='dark' bg='dark' fixed='bottom'>
           <div>
             <input
               ref={this.fileUploader}
@@ -549,7 +525,7 @@ class App extends Component {
           </div>
           <Button variant="outline-primary" id="save-button" onClick={() => this.saveClick()}>Save</Button>
           <Button variant="outline-primary" id="print-button" onClick={() => window.print()}>Print</Button>
-        </Navbar>
+        </Navbar> */}
       </div>
     );
   }
