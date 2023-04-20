@@ -239,15 +239,3 @@ function Admin() {
 
 export default Admin;
 
-// const express = require('express');
-// const catalogRouter = require('./addCatalog');
-
-// const app = express();
-
-// app.use(express.json());
-
-// app.use('/api', catalogRouter);
-
-// app.listen(3001, () => {
-//   console.log('Server started on port 3001');
-// });
