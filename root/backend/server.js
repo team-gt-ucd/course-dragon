@@ -7,14 +7,13 @@ import connectDB from "./config/db.js";
 
 //--------------- List of Route Resources (add new file paths to routes here) ---------------
 import homeRoutes from "./api/home/homeRoutes.js"
-import userRoutes from "./api/users/userRoutes.js"
 import creditsRoutes from "./api/credits/creditsRoutes.js"
 import courseRoutes from "./api/course/courseRoutes.js"
 import instructorScoreRoutes from "./api/instructor-score/instructorScoreRoutes.js"
 import semesterRoutes from "./api/semester/semesterRoutes.js"
 import degreeMapRoutes from "./api/degree-map/degreeMapRoutes.js"
 import addCatalogRoutes from "./api/admin/addCatalogRoutes.js"
-import userRoute from "./api/users/userRoute.js"
+import userRoute from "./api/user/userRoute.js"
 //Load config
 dotenv.config({ path: "./config/config.env" });
 
@@ -33,7 +32,6 @@ app.use(express.json());
 
 //--------------- List of our Routes (add new routes here) ---------------
 app.use("/", homeRoutes);
-app.use("/users", userRoutes);
 app.use("/credits", creditsRoutes);
 app.use("/course",courseRoutes);
 app.use("/instructor-score", instructorScoreRoutes);
