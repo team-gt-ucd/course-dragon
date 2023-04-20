@@ -7,6 +7,7 @@ import StatusButtons from './StatusButtons';
 function LoginButton() {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showSignupForm, setShowSignupForm] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const handleLoginClick = () => setShowLoginForm(true);
   const handleSignupClick = () => setShowSignupForm(true);
@@ -14,6 +15,7 @@ function LoginButton() {
   const handleClose = () => {
     setShowLoginForm(false);
     setShowSignupForm(false);
+    setShowSuccessMessage(false);
   };
 
   // handle User signup request when the signUp button is clicked after user inputs the email and password
@@ -29,7 +31,7 @@ function LoginButton() {
     setPassword(e.target.value);
   };
 
-  const handleSignup = () => {
+  const createUsers = () => {
     let apiURL = "http://localhost:4001/user/";
   
     if (!email || !password) {
@@ -37,20 +39,18 @@ function LoginButton() {
       return;
     }
   
-    // make sure that there is no duplicate email
-    fetch(apiURL)
-      .then((response) => response.json())
-      .then((data) => {
-        const existingItem = data.find((item) => item.email === email);
-        if (existingItem) {
-          alert(`A user with email ${email} already exists.`);
-          return;
-        }
+    // // make sure that there is no duplicate email
+   
+    //     const existingItem = data.find((item) => item.email === email);
+    //     if (existingItem) {
+    //       alert(`A user with email ${email} already exists.`);
+    //       return;
+    //     }
   
         // create the new user object
         let newUser = {
-          email: email,
-          password: password,
+          "email": email,
+          "password": password
         };
   
         // save the new user to the database
@@ -63,11 +63,18 @@ function LoginButton() {
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
-            setShowSuccessMessage(true);
+            setEmail('');
+            setPassword('');
+            // alert(`New user created: ${email}`);
+            setShowSuccessMessage(true);    //shows the message on the screen
+
           })
-          
+                
+      .catch((error) => {
+        console.error(`Error creating user: ${email}.`);
+        // Display an error message to the user
+        alert(`Error creating new user for ${email} Please try again later.`);
       })
-      .catch((error) => console.error(error));
   };
     
   return (
@@ -106,18 +113,25 @@ function LoginButton() {
           <Modal.Title>Sign up</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={createUsers}>
             <Form.Group className="custom-login-button">
                 <Form.Control name="email" placeholder="Email" type="email" value={email} onChange={handleEmailChange} style={{marginBottom:'10px'}}/>
                 <Form.Control name="password" placeholder="Password" type="password" value={password} onChange={handlePasswordChange} style={{marginBottom:'10px'}}/>
             </Form.Group>
           </Form>
           <div className="d-grid gap-2">
-            <Button variant="success" size="lg" onClick={handleSignup()}>
+            <Button type="submit" variant="success" size="lg" onClick={createUsers}>
               Signup
             </Button>
           </div>
-      
+          {showSuccessMessage && (
+        <div className="alert alert-success" role="alert">
+          User created successfully!
+          <Button className="float-end" onClick={handleClose}>
+            Close
+          </Button>
+        </div>
+      )}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
