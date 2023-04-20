@@ -46,7 +46,9 @@ function AddCustomSemester(props) {
         <Modal.Body>
           <Form>
             <Form.Group className="custom-class-form">
-            <Form.Label>Semester:</Form.Label>
+              
+              {/* Semester Dropdown */}
+              <Form.Label>Semester:</Form.Label>
               <Form.Select value={semesterType}
                 onChange={e => { setSemesterType(e.target.value); }}>
                 <option key='defaultoption' value=''>Select a category</option>
@@ -54,10 +56,12 @@ function AddCustomSemester(props) {
                 <option key='falloption' value='Fall'>Fall</option>
                 <option key='springoption' value='Spring'>Spring</option>
               </Form.Select>
+
+              {/* Year Field */}
               <Form.Label>Year:</Form.Label>
               <Form.Control
                 id='semesterYear'
-                placeholder="3"
+                placeholder='1'
                 onChange={e => { setSemesterYear(e.target.value); }} />
             </Form.Group>
           </Form>

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { creditsSchema } from '../credits/creditsModel.js';
 import { instructorScoreSchema } from '../instructor-score/instructorScoreModel.js';
+
 export const courseSchema = mongoose.Schema({
     term: {
         type: String,
@@ -10,7 +11,8 @@ export const courseSchema = mongoose.Schema({
     year: {
         type: Number,
         min: [1, 'Please enter a valid year'],
-        max: [3000, 'Please enter a valid year']
+        max: [100, 'Please enter a valid year'],
+        default: 1
     },
     course_subject: {
         type: String,

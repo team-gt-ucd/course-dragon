@@ -6,6 +6,49 @@ import Col from 'react-bootstrap/Col';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import FlowChartItem from './FlowChartItem.jsx';
+import AddCustomClass from './CustomClassModal';
+
+function HoverDropdown(props) {
+  function toggleMenu() {
+    setIsOpen(!isOpen);
+  }
+
+  const [show, setShow] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const showDropdown = (e) => {
+    setShow(!show);
+  };
+
+  const hideDropdown = (e) => {
+    setShow(false);
+  };
+
+  const semYear = `${props.semYear.sem}-${props.semYear.year}`;
+
+  return (
+    <div
+      id={`collapsible-nav-dropdown-${semYear}`}
+      onMouseEnter={showDropdown}
+      onMouseLeave={hideDropdown}
+      >
+      {show ? (
+        <div>
+          {/* Revised add custom class button */}
+          <AddCustomClass
+            onSubmit={props.onAddClassSubmit && toggleMenu}
+            CategoryOpts={Object.keys(props.Categories).filter(
+              (k) => "FC_Name" in props.Categories[k]
+            )}
+            autoSemInfo={semYear}
+          />
+        </div>
+      ) : (
+        <div style={{ fontSize: "20px" }}>. . .</div>
+      )}
+    </div>
+  );
+}
 
 /*** Displays the flowchart view of the web app ***/
 function FlowChart(props) {
@@ -106,7 +149,7 @@ function FlowChart(props) {
           {/* the drag-n-drop functionality uses the react beautiful drag-n-drop library and is handled within the DragDropContext tags which calls the handleOnDragEnd function in the App component to update the state. */}
           <DragDropContext onDragEnd={props.onDragEnd}>
           {// create all of the html code for the years by mapping each entry to the code
-           //  uses map to loop and extract year number in 'year' and list of semesters in 'sems'
+            // uses map to loop and extract year number in 'year' and list of semesters in 'sems'
             Object.entries(yearSems).map(([year, sems]) => (
             // makes new column for each year with table inside for semesters
               <Col key={'colyear' + year} lg={3} sm={6} s={12} className='yearcol'>
@@ -142,6 +185,8 @@ function FlowChart(props) {
                             )}
                           </Draggable>
                           ))}
+                          {/* Hover-dropdown for the add class button */}
+                          <HoverDropdown semYear={{sem: sem.split('-')[0], year: year[0]}} Categories={props.Categories} onAddClassSubmit={props.onAddClassSubmit} />
                           {/* To keep everything in place when dragging around classes */}
                           {provided.placeholder}
                         </Col>
@@ -155,6 +200,7 @@ function FlowChart(props) {
         <div className="flow-legend">
                               {legend}
         </div>
+
       </Container>
     </React.Fragment>
   );

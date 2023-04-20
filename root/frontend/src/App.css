@@ -136,6 +136,12 @@ input[type="file"] {
   padding-right: 2em;
 }
 
+.custom-login-button {
+  text-align: left;
+  font-size: 1em;
+  padding-right: 1em;
+}
+
 .expand {
   margin-top: 10px;
   margin-right: 3vw;

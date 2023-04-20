@@ -113,32 +113,121 @@ class App extends Component {
       showAlert: ['success', 'Semester added to flowchart. Drag any classes into the new semester.'], 
       Semesters: [...this.state.Semesters, semester] 
     });
+    /*/ 
+      This is where the "Add Semseter" API call exists 
+    /*/
+
+    // Use the split() function to split the string into an array
+    // based on the '-' delimiter
+    var semesterArray = semester.split('-');
+    // Store the first element of the array (i.e., "Summer") as lowercase into a variable
+    var season = semesterArray[0].toLowerCase();
+    // Store the second element of the array (i.e., "1") into a variable and cast it to an integer
+    var number = parseInt(semesterArray[1]);
+
+    console.log(season)
+    console.log("\n")
+    console.log(number)
+    console.log("\n")
+
+    let apiURL = "http://localhost:4001/semester"
+    let jsonReq = {
+        "term": season,
+        "year": number,
+        "Courses_list": []
+    }
+    fetch(apiURL, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(jsonReq),
+      mode: 'cors'
+    }).then( (response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      console.log("Recieved response from the server for new semester", response)
+      return response.json();
+    }).then( (res) => {
+      console.log("Semester JSON: ", res);
+    }).catch( (e) => console.error(e) );
+
   }
 
   /*** when user submits new information for a custom class (called by AddCustomClass) ***/
   onAddClassSubmit = (newClassObj, status) => {
     // fix name format by just taking class category and number
-    let nameParts = newClassObj.Id.match(/([A-Z]{4})(.*)([\d]{4})/);
-    newClassObj.Id = nameParts[1] + ' ' + nameParts[3];
+    let nameParts = newClassObj.id.match(/([A-Z]{4})(.*)([\d]{4})/);
+    newClassObj.id = nameParts[1] + ' ' + nameParts[3];
     // add / remove class id to the correct list
     if (status === 'Taken') {
-      this.markClassTaken(newClassObj.Id);
+      this.markClassTaken(newClassObj.id);
     } else {
-      this.markClassPlanned(newClassObj.Id);
+      this.markClassPlanned(newClassObj.id);
     }
 
     // if is already in flowchart, alert the user, but still add it to the list
-    if (newClassObj.Id in this.state.ClassDesc) {
+    if (newClassObj.id in this.state.ClassDesc) {
       this.setState({ showAlert: ['danger', `Class already exists! It was added to your flowchart as a ${status} class.`] });
       return;
     }
 
     // modify objects to include new class
-    let newClassDesc = { ...this.state.ClassDesc, [newClassObj.Id]: newClassObj };
+    let newClassDesc = { ...this.state.ClassDesc, [newClassObj.id]: newClassObj };
     this.setState({
       ClassDesc: newClassDesc,
-      AddedClasses: [...this.state.AddedClasses, newClassObj.Id]
+      AddedClasses: [...this.state.AddedClasses, newClassObj.id]
     });
+    /*/ 
+      This is where the "Add Custom Class" API call exists 
+    /*/
+
+    // Use the split() function to split the string into an array based on the ' ' (space) delimiter
+    var classNameArray = newClassObj.id.split(' ');
+    // Store the first element of the array (i.e., "Summer") as lowercase into a variable
+    var classPrefix = classNameArray[0];
+    // Store the second element of the array (i.e., "1") into a variable and cast it to an integer
+    var classCode = parseInt(classNameArray[1]);
+    // Retreieves the integer from the Credit Amount and stores it as its own variable
+    var credits = parseInt(newClassObj.credits[0].split(" Credits"))
+
+    // Converts status (i.e. "Taken" or "Planned") into a boolean value
+    var courseStatus;
+    if (status === 'Taken') {
+      courseStatus = true;
+    } else {
+      courseStatus = false;
+    }
+
+    let apiURL = "http://localhost:4001/course"
+    let jsonReq = {
+      "course_title": newClassObj.title,
+      "course_subject": classPrefix,
+      "course_code": classCode,
+      "year": newClassObj.year,
+      "term": newClassObj.season.toLowerCase(),
+      "course_description": newClassObj.description,
+      "Credits": {
+        "category": newClassObj.fulfills,
+        "credits_count": credits
+      },
+      "taken": courseStatus,
+      "prerequisites_list": [],
+      "Instructor_score_list": []
+  }
+    fetch(apiURL, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(jsonReq),
+      mode: 'cors'
+    }).then( (response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      console.log("Received response from the server for CreateCustomCourse: ", response)
+      console.log("Course object info: ", response.json());
+      return response.json();
+    }).catch( (e) => console.error(e) );
+
   }
 
   /*** function for handling a click on one of the top navbar links ***/
@@ -436,9 +525,13 @@ class App extends Component {
     // pass handleOnDragEnd for changing state when class dragged
     return (
       <FlowChart
+        Categories={this.state.Categories}
+        onAddClassSubmit={this.onAddClassSubmit}
         Semesters={this.state.Semester_list}
-        onDragEnd={this.handleOnDragEnd}
-        Colors={this.state.Colors}>
+        Classes={classInfo}
+        ColorOrder={this.state.ColorOrder}
+        Colors={this.state.Colors}
+        onDragEnd={this.handleOnDragEnd}>
       </FlowChart>
     );
   }
@@ -487,11 +580,6 @@ class App extends Component {
           <div className="credit-count">{`${takenHours}/${neededHours} taken credits`}</div>
           <div className='spacer'></div>
           <AddCustomSemester onSubmit={this.onAddSemesterSubmit} />
-          <AddCustomClass
-            onSubmit={this.onAddClassSubmit}
-            // gets category names that can fill in multiple boxes on the flowchart
-            CategoryOpts={Object.keys(this.state.Categories).filter(k => 'FC_Name' in this.state.Categories[k])}
-          />
         </div>
         <div className="flow-warn">
           *3000 & 4000 level CSCI courses are semester dependent. Courses may be offered
