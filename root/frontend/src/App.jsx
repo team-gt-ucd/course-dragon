@@ -19,6 +19,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loggedIn: false,
       Display: 'Flow', // determines which page to display
       // information from json file
       Colors: {},
@@ -33,7 +34,7 @@ class App extends Component {
       showAlert: [null, null], // to display alert, holds [Bootstrap type (to color - warn/error), Message]
       AddedClasses: [], // store ids of user-added-classes to save in file 
       Semester_list: [],
-      catalog_year: null,
+      catalog_year: new Date().getFullYear(),
       credits_needed_by_category: [],
       major: "BLANK",
       total_credits_needed: null
@@ -44,25 +45,43 @@ class App extends Component {
 
   /*** when component mounts, load data from json, set state with information ***/
   componentDidMount() { // runs when component loads
-    let degreeMapID = "63fe3b560c4e5570172b1842"
-    let apiURL = `http://localhost:4001/degree-map/${degreeMapID}`
-    fetch(apiURL, {method: 'GET', mode: 'cors'}) // get file at csreqs.json asyncronously
-      .then(response => {
-        if (!response.ok) {
-          throw Error(response.statusText);
+    if(!this.state.loggedIn)
+    {
+      let terms = ["fall", "spring"]
+      let Semester_list = []
+      for(let year = 1; year <= 4; year++) {
+        for(let term = 0; term < 2; term++) {
+          Semester_list.push({
+            year: year, 
+            term: terms[term],
+            Courses_list: []
+          })
         }
-        return response.text()
-      })
-      .then(json => {
-        return JSON.parse(json)
-      })
-      .then(data => {
-        console.log(`Received response from the server for get ID's(${degreeMapID}) DegreeMap, `, data);
-        this.setState(this.generateColors(data.Semester_list));
+      }
+      this.setState({ Semester_list: Semester_list })
+    } 
+    
+    else {
+      let degreeMapID = "63fe3b560c4e5570172b1842"
+      let apiURL = `http://localhost:4001/degree-map/${degreeMapID}`
+      fetch(apiURL, {method: 'GET', mode: 'cors'}) // get file at csreqs.json asyncronously
+        .then(response => {
+          if (!response.ok) {
+            throw Error(response.statusText);
+          }
+          return response.text()
+        })
+        .then(json => {
+          return JSON.parse(json)
+        })
+        .then(data => {
+          console.log(`Received response from the server for get ID's(${degreeMapID}) DegreeMap, `, data);
+          this.setState(this.generateColors(data.Semester_list));
 
-        return this.setState(data)
-      })// set state information
-      .catch(e => console.error('Couldn\'t get Degree Map json file. The error was:\n', e)); // print any errors
+          return this.setState(data)
+        })// set state information
+        .catch(e => console.error('Couldn\'t get Degree Map json file. The error was:\n', e)); // print any errors
+    }
   }
 
   generateColors = (Semester_list) => {
