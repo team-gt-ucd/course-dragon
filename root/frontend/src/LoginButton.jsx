@@ -8,6 +8,7 @@ function LoginButton() {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showSignupForm, setShowSignupForm] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showLoginMessage, setShowLoginMessage] = useState(false);
 
   const handleLoginClick = () => setShowLoginForm(true);
   const handleSignupClick = () => setShowSignupForm(true);
@@ -32,7 +33,7 @@ function LoginButton() {
   };
 
   const createUsers = () => {
-    let apiURL = "http://localhost:4001/user/";
+    let apiURL = "http://localhost:4001/user/signup";
   
     if (!email || !password) {
       console.log("Email and Password are required");
@@ -77,6 +78,69 @@ function LoginButton() {
       })
   };
     
+  const loginUsers = () => {
+    let apiURL = "http://localhost:4001/user/login";
+  
+    if (!email || !password) {
+      console.log("Email and Password are required");
+      return;
+    }
+  
+    let userCredentials = {
+      "email": email,
+      "password": password
+    };
+  
+    // send a POST request to the server to check if the email and password match
+    fetch(apiURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userCredentials),
+      mode: "cors",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setEmail('');
+        setPassword('');;
+        //alert('User login')
+        // check if login was successful
+        if (data.success) {
+          // refresh the current webpage
+          setShowLoginMessage(true);
+          location.reload();
+        } else {
+          // display an error message
+          alert(data.message);
+        }
+      })
+      .catch((error) => {
+        console.error(`Error logging in user: ${email}.`);
+        // Display an error message to the user
+        alert(`Error logging in user for ${email} . Please try again later.`);
+      })
+  };
+  
+  const logoutUser = () => {
+    // send a GET request to the server to logout the user
+    fetch("/user/logout", {
+      method: "GET",
+      mode: "cors",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        // redirect to the home page or login page
+        window.location.href = "http://localhost:3000/Senior-Design-Capstone/";
+      })
+      .catch((error) => {
+        console.error(`Error logging out user.`);
+        // Display an error message to the user
+        alert(`Error logging out user. Please try again later.`);
+      })
+  };
+  
+  
   return (
     <div className="custom-login-button">
       <p onClick={handleLoginClick}>Login</p>
@@ -86,17 +150,25 @@ function LoginButton() {
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={loginUsers}>
             <Form.Group className="custom-login-button">
-                <Form.Control placeholder="Email" type="email" style={{marginBottom:'10px'}}/>
-                <Form.Control placeholder="Password" type="password" style={{marginBottom:'10px'}}/>
+                <Form.Control name="email" placeholder="Email" type="email" value={email} onChange={handleEmailChange} style={{marginBottom:'10px'}}/>
+                <Form.Control name="password" placeholder="Password" type="password" value={password} onChange={handlePasswordChange} style={{marginBottom:'10px'}}/>
             </Form.Group>
           </Form>
           <div className="d-grid gap-2">
-            <Button variant="success" size="lg" onClick={() => console.log("\nLogin button clicked!")}>
+            <Button type="submit" variant="success" size="lg" onClick={loginUsers}>
               Login
             </Button>
           </div>
+          {showLoginMessage && (
+        <div className="alert alert-success" role="alert">
+          User logged In!
+          <Button className="float-end" onClick={handleClose}>
+            Close
+          </Button>
+        </div>
+      )}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
