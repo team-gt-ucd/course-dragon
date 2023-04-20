@@ -9,7 +9,7 @@ export const degreeMapSchema = mongoose.Schema({
     },
     catalog_year: {
         type: Number,
-        min: 1972,
+        min: 1,
         max: 3000
     },
     total_credits_needed: {

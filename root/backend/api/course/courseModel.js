@@ -27,12 +27,12 @@ export const courseSchema = mongoose.Schema({
     course_title: {
         type: String,
         minLength: 2,
-        maxLength: 30,
+        maxLength: 100,
     },
     course_description: {
         type: String,
         minLength: 1,
-        maxLength: 200
+        maxLength: 1000
     },
     Credits: creditsSchema,
     taken: {
