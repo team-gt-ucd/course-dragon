@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
+import encrypt from "mongoose-encryption";
 import UserItem from "./userModel.js";
 
 const router = express.Router();
@@ -25,29 +26,27 @@ export const createUser = async (req, res) => {
 };
 
 export const loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  const email = req.body.email;
+  const password = req.body.password;
+
   if (!email || !password) {
     return res.status(400).json({ error: "Email and Password are required" });
   }
 
-  try {
-    // Check if the user exists in the database
-    const user = await UserItem.findOne({ email });
-    if (!user) {
-      return res.status(401).json({ error: "Invalid email or password" });
+  UserItem.findOne({email:email}, function(err, foundUser){
+    if (err) {
+      console.log(err);
+	return res.status(401).json({ error: "Invalid email or password" });
+    } else {
+      if (foundUser){
+        if (foundUser.password == password){
+          console.log("User Log in");
+	        res.status(200).json({ success: true, message: 'Logged in successfully' });
+        }
+      }
     }
 
-    // Check if the password is correct
-    const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
-      return res.status(401).json({ error: "Invalid email or password" });
-    }
-
-    res.status(200).json({ success: true, message: 'Logged in successfully' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: 'Failed to login' });
-  }
+  })
 };
 
 
