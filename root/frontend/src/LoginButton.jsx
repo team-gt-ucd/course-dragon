@@ -7,16 +7,21 @@ import StatusButtons from './StatusButtons';
 function LoginButton() {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showSignupForm, setShowSignupForm] = useState(false);
+  const [showLogOutForm, setShowLogOutForm] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showLoginMessage, setShowLoginMessage] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
   const handleLoginClick = () => setShowLoginForm(true);
   const handleSignupClick = () => setShowSignupForm(true);
+  const handleLogOutClick = () => setShowLogOutForm(true);
 
   const handleClose = () => {
     setShowLoginForm(false);
     setShowSignupForm(false);
     setShowSuccessMessage(false);
+    setShowLogOutForm(false);
   };
 
   // handle User signup request when the signUp button is clicked after user inputs the email and password
@@ -106,9 +111,10 @@ function LoginButton() {
         //alert('User login')
         // check if login was successful
         if (data.success) {
+          setEmail(email);
+          setIsLoggedIn(true);
           // refresh the current webpage
-          setShowLoginMessage(true);
-          location.reload();
+          //location.reload();
         } else {
           // display an error message
           alert(data.message);
@@ -121,30 +127,34 @@ function LoginButton() {
       })
   };
   
-  const logoutUser = () => {
-    // send a GET request to the server to logout the user
-    fetch("/user/logout", {
-      method: "GET",
-      mode: "cors",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        // redirect to the home page or login page
-        window.location.href = "http://localhost:3000/Senior-Design-Capstone/";
-      })
-      .catch((error) => {
-        console.error(`Error logging out user.`);
-        // Display an error message to the user
-        alert(`Error logging out user. Please try again later.`);
-      })
+  const handleLogout = () => {
+    // code to handle user logout
+    setIsLoggedIn(false);
+    setEmail('');
+    handleClose();
   };
   
-  
   return (
+    <div>
+      {isLoggedIn ? (
+        <div>
+        <p onClick={handleLogOutClick}>Test User</p>
+        <Modal
+          show={showLogOutForm}
+          onHide={handleClose}
+          dialogClassName="custom-logout-modal"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title> {email} </Modal.Title>
+          </Modal.Header>
+          <Modal.Footer>
+            <p className="logout-button" onClick={handleLogout}>Log Out</p>
+          </Modal.Footer>
+        </Modal>
+      </div>
+      ) : (
     <div className="custom-login-button">
       <p onClick={handleLoginClick}>Login</p>
-
       <Modal show={showLoginForm} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Login</Modal.Title>
@@ -212,6 +222,8 @@ function LoginButton() {
         </Modal.Footer>
       </Modal>
     </div>
+      )}
+  </div>
   );
 }
 
