@@ -457,5 +457,16 @@ thead {
 }
 
 
-/*** Login button styling ***/
+/*** Log Out button styling ***/
+.custom-logout-modal {
+  width: 300px;
+  height: 150px;
+}
 
+.logout-button {
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #eee;
+}
