@@ -11,6 +11,8 @@ function LoginButton() {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showLoginMessage, setShowLoginMessage] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [ErrorMessage, setErrorMessage] = useState('');
+
 
 
   const handleLoginClick = () => setShowLoginForm(true);
@@ -41,7 +43,7 @@ function LoginButton() {
     let apiURL = "http://localhost:4001/user/signup";
   
     if (!email || !password) {
-      console.log("Email and Password are required");
+      setErrorMessage("Email and Password are required");
       return;
     }
   
@@ -55,7 +57,7 @@ function LoginButton() {
   
         // create the new user object
         let newUser = {
-          "email": email,
+          "username": email,
           "password": password
         };
   
@@ -79,7 +81,7 @@ function LoginButton() {
       .catch((error) => {
         console.error(`Error creating user: ${email}.`);
         // Display an error message to the user
-        alert(`Error creating new user for ${email} Please try again later.`);
+        setErrorMessage("An error occurred. Please try again later.");
       })
   };
     
@@ -87,12 +89,12 @@ function LoginButton() {
     let apiURL = "http://localhost:4001/user/login";
   
     if (!email || !password) {
-      console.log("Email and Password are required");
+      setErrorMessage("Email and Password are required.");
       return;
     }
   
     let userCredentials = {
-      "email": email,
+      "username": email,
       "password": password
     };
   
@@ -117,15 +119,24 @@ function LoginButton() {
           //location.reload();
         } else {
           // display an error message
-          alert(data.message);
+          setErrorMessage("Incorrect email or password.");
         }
       })
       .catch((error) => {
         console.error(`Error logging in user: ${email}.`);
-        // Display an error message to the user
-        alert(`Error logging in user for ${email} . Please try again later.`);
+        setErrorMessage("Incorrect email or password.");
       })
   };
+  
+  const fetchGoogleAuth = async () => {
+    try {
+      const response = await fetch('http://localhost:4001/auth/google');
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   
   const handleLogout = () => {
     // code to handle user logout
@@ -162,15 +173,28 @@ function LoginButton() {
         <Modal.Body>
           <Form onSubmit={loginUsers}>
             <Form.Group className="custom-login-button">
-                <Form.Control name="email" placeholder="Email" type="email" value={email} onChange={handleEmailChange} style={{marginBottom:'10px'}}/>
+                <Form.Control name="username" placeholder="Email" type="email" value={email} onChange={handleEmailChange} style={{marginBottom:'10px'}}/>
                 <Form.Control name="password" placeholder="Password" type="password" value={password} onChange={handlePasswordChange} style={{marginBottom:'10px'}}/>
             </Form.Group>
           </Form>
           <div className="d-grid gap-2">
-            <Button type="submit" variant="success" size="lg" onClick={loginUsers}>
+            <Button type="submit" variant="success" size="lg" onClick={loginUsers} style={{marginBottom:'10px'}}>
               Login
             </Button>
           </div>
+          <div className="d-grid gap-2">
+            <Button type="submit" variant="info" size="lg" onClick ={fetchGoogleAuth} >
+              Sign In with Google
+            </Button>
+          </div>
+          {ErrorMessage && (
+          <div className="alert alert-danger" role="alert">
+            {ErrorMessage}
+            <Button className="float-end" onClick={() => setErrorMessage("")}>
+              Close
+            </Button>
+          </div>
+        )}
           {showLoginMessage && (
         <div className="alert alert-success" role="alert">
           User logged In!
@@ -197,15 +221,28 @@ function LoginButton() {
         <Modal.Body>
           <Form onSubmit={createUsers}>
             <Form.Group className="custom-login-button">
-                <Form.Control name="email" placeholder="Email" type="email" value={email} onChange={handleEmailChange} style={{marginBottom:'10px'}}/>
+                <Form.Control name="username" placeholder="Email" type="email" value={email} onChange={handleEmailChange} style={{marginBottom:'10px'}}/>
                 <Form.Control name="password" placeholder="Password" type="password" value={password} onChange={handlePasswordChange} style={{marginBottom:'10px'}}/>
             </Form.Group>
           </Form>
           <div className="d-grid gap-2">
-            <Button type="submit" variant="success" size="lg" onClick={createUsers}>
+            <Button type="submit" variant="success" size="lg" onClick={createUsers} style={{marginBottom:'10px'}}>
               Signup
             </Button>
           </div>
+          <div className="d-grid gap-2">
+            <Button type="submit" variant="info" size="lg" href="/auth/google">
+              Sign Up with Google
+            </Button>
+          </div>
+          {ErrorMessage && (
+          <div className="alert alert-danger" role="alert">
+            {ErrorMessage}
+            <Button className="float-end" onClick={() => setErrorMessage("")}>
+              Close
+            </Button>
+          </div>
+        )}
           {showSuccessMessage && (
         <div className="alert alert-success" role="alert">
           User created successfully!
@@ -213,6 +250,7 @@ function LoginButton() {
             Close
           </Button>
         </div>
+        
       )}
         </Modal.Body>
         <Modal.Footer>
