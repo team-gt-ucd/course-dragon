@@ -29,10 +29,10 @@ function AddCustomClass(props) {
     setChecked(newValue); 
   }
 
-  useEffect(() => { // runs after every render (state changes) -- adjusts if submit button disabled
-    setButtonStatus(!(classIdValue.length > 0 && classTitle.length > 0 && creditNumValue.length > 0 && /^\d+$/.test(creditNumValue) 
-      && /^\s*[A-Z]{4}(.*)[\d]{4}\s*$/.test(classIdValue) && classCategoryValue !== '' && checked.length > 0));
-  });
+  // useEffect(() => { // runs after every render (state changes) -- adjusts if submit button disabled
+  //   setButtonStatus(!(classIdValue.length > 0 && classTitle.length > 0 && creditNumValue.length > 0 && /^\d+$/.test(creditNumValue) 
+  //     && /^\s*[A-Z]{4}(.*)[\d]{4}\s*$/.test(classIdValue) && classCategoryValue !== '' && checked.length > 0));
+  // });
 
   // functions that handle open/close
   const handleShow = () => { setShow(true); };
@@ -128,7 +128,7 @@ function AddCustomClass(props) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button disabled={buttonStatus} variant="dark" onClick={addClass}>
+          <Button variant="dark" onClick={addClass}>
             Add Class
           </Button>
         </Modal.Footer>

@@ -43,9 +43,6 @@ services:
     container_name: course-dragon-backend-app
     networks:
       - course-dragon-network
-    volumes:
-      # Syntax <nameOfVolume>:<directorInDocker>
-      - ./backend:/server
     links:
       - db:mongo
     depends_on:
