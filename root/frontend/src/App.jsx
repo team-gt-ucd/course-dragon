@@ -157,7 +157,7 @@ class App extends Component {
       }
       console.log("Recieved response from the server for new semester", response)
       return response.json();
-    }).then( (roes) => {
+    }).then( (res) => {
       console.log("Semester JSON: ", res);
     }).catch( (e) => console.error(e) );
 
