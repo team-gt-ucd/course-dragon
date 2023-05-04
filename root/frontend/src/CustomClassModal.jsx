@@ -128,7 +128,7 @@ function AddCustomClass(props) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button disabled={buttonStatus} variant="dark" onClick={addClass}>
+          <Button variant="dark" onClick={addClass}>
             Add Class
           </Button>
         </Modal.Footer>

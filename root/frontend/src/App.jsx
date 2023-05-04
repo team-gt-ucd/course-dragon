@@ -14,6 +14,7 @@ import Dropzone from 'react-dropzone';
 import AddCustomSemester from './CustomSemesterModal';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import LoginButton from './LoginButton.jsx'
+import csreqs from '../public/csreqs.json'
 
 class App extends Component {
   constructor(props) {
@@ -43,8 +44,15 @@ class App extends Component {
     this.fileUploader = React.createRef(); // ref to upload file dialog
   }
 
+  getCategories = () => {
+    this.setState({Categories: csreqs.Categories});
+  }
+
   /*** when component mounts, load data from json, set state with information ***/
   componentDidMount() { // runs when component loads
+
+    this.setState({Categories: csreqs.Categories});
+
     if(!this.state.loggedIn)
     {
       let terms = ["fall", "spring"]
@@ -82,6 +90,8 @@ class App extends Component {
         })// set state information
         .catch(e => console.error('Couldn\'t get Degree Map json file. The error was:\n', e)); // print any errors
     }
+
+    
   }
 
   generateColors = (Semester_list) => {
@@ -224,8 +234,10 @@ class App extends Component {
         throw Error(response.statusText);
       }
       console.log("Received response from the server for CreateCustomCourse: ", response)
-      console.log("Course object info: ", response.json());
-      return response.json();
+
+      let returnedResponse = response.json();
+      console.log("Course object info: ", returnedResponse);
+      return returnedResponse;
     }).catch( (e) => console.error(e) );
 
   }
@@ -528,7 +540,7 @@ class App extends Component {
         Categories={this.state.Categories}
         onAddClassSubmit={this.onAddClassSubmit}
         Semesters={this.state.Semester_list}
-        Classes={classInfo}
+        //Classes={classInfo}
         ColorOrder={this.state.ColorOrder}
         Colors={this.state.Colors}
         onDragEnd={this.handleOnDragEnd}>
@@ -620,3 +632,4 @@ class App extends Component {
 }
 
 export default App;
+
