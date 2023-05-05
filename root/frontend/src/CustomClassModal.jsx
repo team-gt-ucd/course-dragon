@@ -31,7 +31,7 @@ function AddCustomClass(props) {
 
   useEffect(() => { // runs after every render (state changes) -- adjusts if submit button disabled
     setButtonStatus(!(classIdValue.length > 0 && classTitle.length > 0 && creditNumValue.length > 0 && /^\d+$/.test(creditNumValue) 
-      && /^\s*[A-Z]{4}(.*)[\d]{4}\s*$/.test(classIdValue) && classCategoryValue !== '' && checked.length > 0));
+      && /^\s*[A-Z]{4}(.*)[\d]{4}\s*$/.test(classIdValue) && classCategoryValue !== ''));
   });
 
   // functions that handle open/close
@@ -117,8 +117,8 @@ function AddCustomClass(props) {
                   props.CategoryOpts ? props.CategoryOpts.map((opt, i) =>
                   (<option key={'option' + i} value={opt}>{opt}</option>)) : null}
                 </Form.Select>
-              <Form.Label className='taken-label'>Status: </Form.Label>
-              <StatusButtons checked={checked} handleButtonChange={handleButtonChange} uniqueKey='Custom'></StatusButtons>
+              {/* <Form.Label className='taken-label'>Status: </Form.Label>
+              <StatusButtons checked={checked} handleButtonChange={handleButtonChange} uniqueKey='Custom'></StatusButtons> */}
             </Form.Group>
           </Form>
           

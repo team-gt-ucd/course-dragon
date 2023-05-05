@@ -58,7 +58,7 @@ class App extends Component {
           })
         }
       }
-      this.setState({ Semester_list: Semester_list })
+      this.setState({ Semester_list: Semester_list, Categories: ["CS Core"] })
     } 
     
     else {
@@ -91,7 +91,7 @@ class App extends Component {
         colors[course.Credits.category] = this.getRandomColor();
       })
     });
-    return { Colors: colors };
+    return { Colors: colors, Categories: Object.keys(colors)};
   }
 
   getRandomColor = () => {
@@ -103,15 +103,464 @@ class App extends Component {
     return color;
   }
 
+  generateTemplateDegreeMap = () => {
+    const templateDegreeMap = {
+        "major": "CSBS",
+        "catalog_year": "2019",
+        "total_credits_needed": 128,
+        "credits_needed_by_category": [
+            {
+                "category": "CS Core",
+                "credits_needed": 31
+            },
+            {
+                "category": "CS Systems Core",
+                "credits_needed": 21
+            },
+            {
+                "category": "CS Breadth",
+                "credits_needed": 15
+            },
+            {
+                "category": "CS Elective",
+                "credits_needed": 12
+            },
+            {
+                "category": "ENGR",
+                "credits_needed": 3
+            },
+            {
+                "category": "MATH",
+                "credits_needed": 12
+            },
+            {
+                "category": "Science",
+                "credits_needed": 10
+            },
+            {
+                "category": "Gen Ed Core",
+                "credits_needed": 30
+            }
+        ],
+        "Semester_list": [
+            {
+                "term": "fall",
+                "year": 1,
+                "Courses_list": [
+                    {
+                        "term": "fall",
+                        "year": 1,
+                        "course_subject": "CSCI",
+                        "course_code" : 1410,
+                        "course_title" : "Fundamentals of Computing",
+                        "course_description" : "First course in computing for those who will take additional computer science courses. Covers the capabilities of a computer, the elements of a modern programming language, and basic techniques for solving problems using a computer. Coreq: CSCI\u00a01411. Max Hours: 3 Credits.\nGrading Basis: Letter Grade\nCoreq: CSCI\u00a01411.",
+                        "Credits" : {
+                            "category": "CS Core",
+                            "credits_count": 3
+                        },
+                        "taken": "false",
+                        "prerequisites_list" : [
+                        ],
+                        "Instructor_score_list": [
+                        ]
+                    },
+                    {
+                        "term": "fall",
+                        "year": 1,
+                        "course_subject": "CSCI",
+                        "course_code" : 1411,
+                        "course_title" : "Fundamentals of Computing Laboratory",
+                        "course_description" : "This laboratory is taken with CSCI\u00a01410 and will provide students with additional help with problem solving and computer exercises to compliment the course material covered in CSCI\u00a01410. Coreq: CSCI\u00a01410. Max Hours: 1 Credit.\nGrading Basis: Letter Grade\nD-En CO: CSCI\u00a01410 coreq",
+                        "Credits" : {
+                            "category": "CS Core",
+                            "credits_count": 1
+                        },
+                        "taken": "false",
+                        "prerequisites_list" : [
+                        ],
+                        "Instructor_score_list": [
+                        ]
+                    },
+                    {
+                        "term": "fall",
+                        "year": 1,
+                        "course_subject": "CSCI",
+                        "course_code" : 1510,
+                        "course_title" : "Logic Design",
+                        "course_description" : "The design and analysis of combinational and sequential logic circuits. Topics include binary and hexadecimal number systems, Boolean algebra and Boolean function minimization, and algorithmic state machines. Lecture/lab includes experiments with computer-aided design tools. This course requires the level of mathematical maturity of students ready for Calculus I. Max hours: 3 Credits.\nGrading Basis: Letter Grade",
+                        "Credits" : {
+                            "category": "CS Systems Core",
+                            "credits_count": 3
+                        },
+                        "taken": "false",
+                        "prerequisites_list" : [
+                            {
+                                "course_subject":"MATH",
+                                "course_code":1120
+                            },
+                            {
+                                "course_subject":"MATH",
+                                "course_code":1130
+                            }
+                        ],
+                        "Instructor_score_list": [
+                        ]
+                    },
+                    {
+                        "term": "fall",
+                        "year": 1,
+                        "course_subject": "ENGR",
+                        "course_code" : 1200,
+                        "course_title" : "Fundamentals of Engineering Design Innovation",
+                        "course_description" : "This course introduces concepts of engineering design innovation at a variety of scales and disciplines. Participants will experience and explore core technology and design themes including design principles, processes, methods, modes of thinking, and social and cultural aspects or design. Max hours: 3 Credits.\nGrading Basis: Letter Grade",
+                        "Credits" : {
+                            "category": "ENGR",
+                            "credits_count": 3
+                        },
+                        "taken": "false",
+                        "prerequisites_list" : [
+                        ],
+                        "Instructor_score_list": [
+                        ]
+                    },
+                    {
+                        "term": "fall",
+                        "year": 1,
+                        "course_subject": "MATH",
+                        "course_code" : 1401,
+                        "course_title" : "Calculus I",
+                        "course_description" : "First course of a three-semester sequence (MATH\u00a01401, 2411, 2421) in calculus. Topics covered include limits, derivatives, applications of derivatives, and the definite integral. Note: No co-credit with MATH\u00a01080. Prereq:MATH\u00a01109 or MATH\u00a01070 or MATH\u00a01110 with a C- or higher and MATH\u00a01120 with a C- or higher or MATH\u00a01130 with a C- or higher or MATH\u00a01401 with a C- or higher OR entry into the MA01 Student Group OR ALEKS PPL score 76-100. If you have any questions or concerns about this requisite, please notify MATH.Placement@ucdenver.edu. Max Hours: 4 Credits.\nGrading Basis: Letter Grade\nMATH\u00a01109 or MATH\u00a01070 or MATH\u00a01110 with a C- or higher and MATH\u00a01120 with a C- or higher or MATH\u00a01130 with a C- or higher or MATH\u00a01401 with a C- or higher OR entry into the MA01 Student Group OR ALEKS PPL score 76-100.\nAdditional Information: Denver Core Requirement, Mathematics; GT courses GT Pathways, GT-MA1, Mathematics.",
+                        "Credits" : {
+                            "category": "MATH",
+                            "credits_count": 4
+                        },
+                        "taken": "false",
+                        "prerequisites_list" : [
+                            {
+                                "course_subject":"MATH",
+                                "course_code":1109
+                            },
+                            {
+                                "course_subject":"MATH",
+                                "course_code":1070
+                            },
+                            {
+                                "course_subject":"MATH",
+                                "course_code":1110
+                            },
+                            {
+                                "course_subject":"MATH",
+                                "course_code":1120
+                            },
+                            {
+                                "course_subject":"MATH",
+                                "course_code":1130
+                            }
+                        ],
+                        "Instructor_score_list": [
+                        ]
+                    },
+                    {
+                        "term": "fall",
+                        "year": 1,
+                        "course_subject": "GEN",
+                        "course_code" : 1000,
+                        "course_title" : "Gen Ed Core",
+                        "course_description" : "Fill in Gen Ed Core class here.",
+                        "Credits" : {
+                            "category": "GEN",
+                            "credits_count": 3
+                        },
+                        "taken": "false",
+                        "prerequisites_list" : [
+                        ],
+                        "Instructor_score_list": [
+                        ]
+                    }
+                ]
+            },
+            {
+                "term": "spring",
+                "year": 1,
+                "Courses_list": [
+                    {
+                        "term": "spring",
+                        "year": 1,
+                        "course_subject": "CSCI",
+                        "course_code" : 2312,
+                        "course_title" : "Object Oriented Programming",
+                        "course_description" : "Programming topics in a modern programming language. The emphasis is on problem solving using object oriented and Generic Programming. Topics include advanced I/O, classes, inheritance, polymorphism and virtual functions, abstract base classes, exception handling, templates, and the Standard Template Library. Prereq: Grade of C- or higher in the following courses: CSCI\u00a01410 and CSCI\u00a01411. Max Hours: 3 Credits.\nGrading Basis: Letter Grade\nPrereq: Grade of C- or higher in the following courses: CSCI\u00a01410 and CSCI\u00a01411",
+                        "Credits" : {
+                            "category": "CS Core",
+                            "credits_count": 3
+                        },
+                        "taken": "false",
+                        "prerequisites_list" : [
+                            {
+                                "course_subject":"CSCI",
+                                "course_code":1410
+                            },
+                            {
+                                "course_subject":"CSCI",
+                                "course_code":1411
+                            }
+                        ],
+                        "Instructor_score_list": [
+                        ]
+                    },
+                    {
+                        "term": "spring",
+                        "year": 1,
+                        "course_subject": "CSCI",
+                        "course_code" : 2525,
+                        "course_title" : "Assembly Language and Computer Organization",
+                        "course_description" : "Topics include computer architecture, program execution at the hardware level, programming in assembly language, the assembly process, hardware support of some high-level language features, and a program's interface to the operating system. Programming exercises are assigned in this course. These exercises involve the use of specific hardware in designated laboratories. Prereq: Grade of C- or higher in the following courses: CSCI\u00a01410, CSCI\u00a01411 and CSCI\u00a01510. Max Hours: 3 Credits.\nGrading Basis: Letter Grade\nPrereq: Grade of C- or higher in the following courses: CSCI\u00a01410, CSCI\u00a01411 and CSCI\u00a01510.",
+                        "Credits" : {
+                            "category": "CS Systems Core",
+                            "credits_count": 3
+                        },
+                        "taken": "false",
+                        "prerequisites_list" : [
+                            {
+                                "course_subject":"CSCI",
+                                "course_code":1410
+                            },
+                            {
+                                "course_subject":"CSCI",
+                                "course_code":1411
+                            },
+                            {
+                                "course_subject":"CSCI",
+                                "course_code":1510
+                            }
+                        ],
+                        "Instructor_score_list": [
+                        ]
+                    },
+                    {
+                        "term": "spring",
+                        "year": 1,
+                        "course_subject": "MATH",
+                        "course_code" : 2411,
+                        "course_title" : "Calculus II",
+                        "course_description" : "The second of a three-semester sequence (MATH\u00a01401, 2411, 2421) in calculus. Topics covered include exponential, logarithmic, and trigonometric functions, techniques of integration, indeterminate forms, improper integrals and infinite series. Prereq: C- or better in MATH\u00a01401. Note: Students with a grade of B- or better in MATH\u00a01401 pass this course at a much higher rate. Term offered: fall, spring, summer. Max hours: 4 Credits. GT: Course is approved by the Colorado Dept of Higher Education for statewide guaranteed transfer, GT-MA1.\nGrading Basis: Letter Grade\nPrereq: C- or better in MATH\u00a01401\nAdditional Information: GT courses GT Pathways, GT-MA1, Mathematics; Denver Core Requirement, Mathematics.",
+                        "Credits" : {
+                            "category": "MATH",
+                            "credits_count": 4
+                        },
+                        "taken": "false",
+                        "prerequisites_list" : [
+                            {
+                                "course_subject":"MATH",
+                                "course_code":1401
+                            }
+                        ],
+                        "Instructor_score_list": [
+                        ]
+                    },
+                    {
+                        "term": "spring",
+                        "year": 1,
+                        "course_subject": "ENGL",
+                        "course_code" : 1020,
+                        "course_title" : "Core Composition I",
+                        "course_description" : "Provides opportunities to write for different purposes and audiences, with an emphasis on learning how to respond to various rhetorical situations; improving critical thinking, reading, and writing abilities; understanding various writing processes; and gaining a deeper knowledge of language conventions. Term offered: fall, spring, summer. Max hours: 3 Credits. GT: Course is approved by the Colorado Dept of Higher Education for statewide guaranteed transfer, GT-C01.\nGrading Basis: Letter Grade\nAdditional Information: GT courses GT Pathways, GT-CO1, Communication; Denver Core Requirement, English Composition.",
+                        "Credits" : {
+                            "category": "Gen Ed Core",
+                            "credits_count": 3
+                        },
+                        "taken": "false",
+                        "prerequisites_list" : [
+                        ],
+                        "Instructor_score_list": [
+                        ]
+                    },
+                    {
+                        "term": "spring",
+                        "year": 1,
+                        "course_subject": "GEN",
+                        "course_code" : 1001,
+                        "course_title" : "Gen Ed Core",
+                        "course_description" : "Fill in Gen Ed Core class here.",
+                        "Credits" : {
+                            "category": "GEN",
+                            "credits_count": 3
+                        },
+                        "taken": "false",
+                        "prerequisites_list" : [
+                        ],
+                        "Instructor_score_list": [
+                        ]
+                    }
+                ]
+            },
+            {
+                "term": "fall",
+                "year": 2,
+                "Courses_list": [
+                    {
+                        "term": "fall",
+                        "year": 2,
+                        "course_subject": "CSCI",
+                        "course_code" : 2421,
+                        "course_title" : "Data Structures and Program Design",
+                        "course_description" : "Topics include a first look at an algorithm, data structures, abstract data types, and basic techniques such as sorting, searching, and recursion. Programming exercises are assigned through the semester. Prereq: CSCI\u00a02312 with a grade of C- or higher. Max hours: 3 Credits.\nGrading Basis: Letter Grade\nPrereq: CSCI\u00a02312 with a grade of C- or higher.",
+                        "Credits" : {
+                            "category": "CS Core",
+                            "credits_count": 3
+                        },
+                        "taken": "false",
+                        "prerequisites_list" : [
+                            {
+                                "course_subject":"CSCI",
+                                "course_code":2312
+                            }
+                        ],
+                        "Instructor_score_list": [
+                        ]
+                    },
+                    {
+                        "term": "fall",
+                        "year": 2,
+                        "course_subject": "CSCI",
+                        "course_code" : 2511,
+                        "course_title" : "Discrete Structures",
+                        "course_description" : "Covers the fundamentals of discrete mathematics, including: logic, sets, functions, asymptotics, mathematical reasoning, induction, combinatorics, discrete probability, relations and graphs. Emphasis on how discrete mathematics applies to computer science in general and algorithm analysis in particular. Prereq: MATH\u00a01401 with a C- or higher (Calculus I). Max Hours: 3 Credits.\nGrading Basis: Letter Grade\nPrereq: MATH\u00a01401 with a C- or higher",
+                        "Credits" : {
+                            "category": "CS Core",
+                            "credits_count": 3
+                        },
+                        "taken": "false",
+                        "prerequisites_list" : [
+                            {
+                                "course_subject":"MATH",
+                                "course_code":1401
+                            }
+                        ],
+                        "Instructor_score_list": [
+                        ]
+                    },
+                    {
+                        "term": "fall",
+                        "year": 2,
+                        "course_subject": "SCIE",
+                        "course_code" : 1000,
+                        "course_title" : "Science",
+                        "course_description" : "Science course",
+                        "Credits" : {
+                            "category": "Science",
+                            "credits_count": 4
+                        },
+                        "taken": "false",
+                        "prerequisites_list" : [
+                        ],
+                        "Instructor_score_list": [
+                        ]
+                    },
+                    {
+                        "term": "fall",
+                        "year": 2,
+                        "course_subject": "SCIE",
+                        "course_code" : 1001,
+                        "course_title" : "Science",
+                        "course_description" : "Science lab",
+                        "Credits" : {
+                            "category": "Science",
+                            "credits_count": 1
+                        },
+                        "taken": "false",
+                        "prerequisites_list" : [
+                        ],
+                        "Instructor_score_list": [
+                        ]
+                    },
+                    {
+                        "term": "fall",
+                        "year": 2,
+                        "course_subject": "ENGL",
+                        "course_code" : 2030,
+                        "course_title" : "Core Composition II",
+                        "course_description" : "Focuses on academic and other types of research-based writing and builds on the work completed in ENGL\u00a01020. Focuses on critical thinking, reading and writing as well as working with primary and secondary source material to produce a variety of research-based essays. Emphasis on using both print-based and electronic-based information. Prereq: ENGL\u00a01020. Term offered: fall, spring, summer. Max hours: 3 Credits. GT: Course is approved by the Colorado Dept of Higher Education for statewide guaranteed transfer, GT-C02.\nGrading Basis: Letter Grade\nPrereq:  ENGL\u00a01020\nAdditional Information: Denver Core Requirement, English Composition; GT courses GT Pathways, GT-CO2, Communication.",
+                        "Credits" : {
+                            "category": "Gen Ed Core",
+                            "credits_count":3
+                        },
+                        "taken": "false",
+                        "prerequisites_list" : [
+                            {
+                                "course_subject":"ENGL",
+                                "course_code":1020
+                            }
+                        ],
+                        "Instructor_score_list": [
+                        ]
+                    },
+                    {
+                        "term": "fall",
+                        "year": 2,
+                        "course_subject": "GEN",
+                        "course_code" : 1002,
+                        "course_title" : "Gen Ed Core",
+                        "course_description" : "Fill in Gen Ed Core class here.",
+                        "Credits" : {
+                            "category": "GEN",
+                            "credits_count": 3
+                        },
+                        "taken": "false",
+                        "prerequisites_list" : [
+                        ],
+                        "Instructor_score_list": [
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+    let updatedSemester_list = this.state.Semester_list;
+    templateDegreeMap.Semester_list.forEach((semester) => {
+      let semesterIndex = updatedSemester_list.findIndex(obj => obj.year == semester.year && obj.term == semester.term);
+      if (semesterIndex != -1) {
+        updatedSemester_list[semesterIndex].Courses_list = updatedSemester_list[semesterIndex].Courses_list.concat(semester.Courses_list);
+      } else {
+        updatedSemester_list.push(semester);
+      }
+    });
+    console.log("Adding template degree map ", updatedSemester_list);
+    this.setState({ Semester_list: updatedSemester_list });
+    this.setState(this.generateColors(this.state.Semester_list));
+    return;
+  }
 
   onAddSemesterSubmit = (semester) => {
-    if (this.state.Semesters.includes(semester)) {
+    let updatedSemester_list = this.state.Semester_list;
+    let term = semester.split("-")[0].toLowerCase();
+    let year = parseInt(semester.split("-")[1]);
+    let semesterIndex = this.state.Semester_list.findIndex(obj => obj.year == year && obj.term == term);
+    if (semesterIndex != -1) {
       this.setState({ showAlert: ['danger', 'Semester already exists. Check your flowchart.'] });
       return;
     }
+    updatedSemester_list.push({
+      term: term,
+      year: year,
+      Courses_list: [],
+    })
+    updatedSemester_list.sort((a, b) => {
+      if (a.year == b.year) {
+        if (a.term == "fall" && (b.term == "winter" || b.term == "spring" || b.term == "summer")
+        || a.term == "winter" && (b.term == "spring" || b.term == "summer")
+        || a.term == "spring" && b.term == "summer") {
+          return -1;
+        } else {
+          return 1;
+        }
+      } else {
+        return a.year - b.year;
+      }
+    })
     this.setState({ 
       showAlert: ['success', 'Semester added to flowchart. Drag any classes into the new semester.'], 
-      Semesters: [...this.state.Semesters, semester] 
+      Semester_list: updatedSemester_list 
     });
     /*/ 
       This is where the "Add Semseter" API call exists 
@@ -155,6 +604,36 @@ class App extends Component {
 
   /*** when user submits new information for a custom class (called by AddCustomClass) ***/
   onAddClassSubmit = (newClassObj, status) => {
+    console.log("Adding class ", newClassObj, " with status ", status);
+    let newSemesterIndex = this.state.Semester_list.findIndex(obj => obj.year == newClassObj.year && obj.term == newClassObj.season);
+    let newCourse = {
+      term: newClassObj.season,
+      year: parseInt(newClassObj.year),
+      course_subject: newClassObj.id.split(' ')[0],
+      course_code: parseInt(newClassObj.id.split(' ')[1]),
+      course_title: newClassObj.title,
+      course_description: newClassObj.description,
+      Credits: { category: newClassObj.fulfills, credits_count: parseInt(newClassObj.credits.split(' ')[0]) },
+      taken: false,
+      prerequisites_list: [],
+      Instructor_score_list: []
+    }
+    if (newSemesterIndex !== -1) {
+      const updatedSemester_list = [...this.state.Semester_list];
+      updatedSemester_list[newSemesterIndex].Courses_list.push(newCourse);
+      this.setState({ Semester_list: updatedSemester_list });
+    } else {
+      this.setState({ Semester_list: [...this.state.Semester_list, newCourse] });
+    }
+
+    this.setState(this.generateColors(this.state.Semester_list));
+
+    return;
+
+    this.setState({
+      Semester_list: [...this.state.Semester_list, newSemester]
+    })
+
     // fix name format by just taking class category and number
     let nameParts = newClassObj.id.match(/([A-Z]{4})(.*)([\d]{4})/);
     newClassObj.id = nameParts[1] + ' ' + nameParts[3];
@@ -166,7 +645,7 @@ class App extends Component {
     }
 
     // if is already in flowchart, alert the user, but still add it to the list
-    if (newClassObj.id in this.state.ClassDesc) {
+    if (newClassObj.id in this.state.classDesc) {
       this.setState({ showAlert: ['danger', `Class already exists! It was added to your flowchart as a ${status} class.`] });
       return;
     }
@@ -176,6 +655,7 @@ class App extends Component {
     this.setState({
       ClassDesc: newClassDesc,
       AddedClasses: [...this.state.AddedClasses, newClassObj.id]
+
     });
     /*/ 
       This is where the "Add Custom Class" API call exists 
@@ -525,10 +1005,12 @@ class App extends Component {
     // pass handleOnDragEnd for changing state when class dragged
     return (
       <FlowChart
+        //
+        //setState={this.setState.bind(this)}
         Categories={this.state.Categories}
         onAddClassSubmit={this.onAddClassSubmit}
         Semesters={this.state.Semester_list}
-        Classes={classInfo}
+        //Classes={classInfo}
         ColorOrder={this.state.ColorOrder}
         Colors={this.state.Colors}
         onDragEnd={this.handleOnDragEnd}>
@@ -562,7 +1044,7 @@ class App extends Component {
           <Navbar.Brand> <img src="public/Logo1.png" height="50px" width="50px"></img>Course Dragon</Navbar.Brand>
           <Nav>
             <Nav.Link>
-              <LoginButton/>
+              <LoginButton onLogin={() => this.generateTemplateDegreeMap()}/>
             </Nav.Link>
             <Nav.Link
               className={(this.state.Display === 'Flow') ? 'active' : 'inactive'}
