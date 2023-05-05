@@ -58,7 +58,7 @@ class App extends Component {
           })
         }
       }
-      this.setState({ Semester_list: Semester_list })
+      this.setState({ Semester_list: Semester_list, Categories: ["CS Core"] })
     } 
     
     else {
@@ -91,7 +91,7 @@ class App extends Component {
         colors[course.Credits.category] = this.getRandomColor();
       })
     });
-    return { Colors: colors };
+    return { Colors: colors, Categories: Object.keys(colors)};
   }
 
   getRandomColor = () => {
@@ -155,6 +155,36 @@ class App extends Component {
 
   /*** when user submits new information for a custom class (called by AddCustomClass) ***/
   onAddClassSubmit = (newClassObj, status) => {
+    console.log("Adding class ", newClassObj, " with status ", status);
+    let newSemesterIndex = this.state.Semester_list.findIndex(obj => obj.year == newClassObj.year && obj.term == newClassObj.season);
+    let newCourse = {
+      term: newClassObj.season,
+      year: parseInt(newClassObj.year),
+      course_subject: newClassObj.id.split(' ')[0],
+      course_code: parseInt(newClassObj.id.split(' ')[1]),
+      course_title: newClassObj.title,
+      course_description: newClassObj.description,
+      Credits: { category: newClassObj.fulfills, credits_count: parseInt(newClassObj.credits.split(' ')[0]) },
+      taken: false,
+      prerequisites_list: [],
+      Instructor_score_list: []
+    }
+    if (newSemesterIndex !== -1) {
+      const updatedSemester_list = [...this.state.Semester_list];
+      updatedSemester_list[newSemesterIndex].Courses_list.push(newCourse);
+      this.setState({ Semester_list: updatedSemester_list });
+    } else {
+      this.setState({ Semester_list: [...this.state.Semester_list, newCourse] });
+    }
+
+    this.setState(this.generateColors(this.state.Semester_list));
+
+    return;
+
+    this.setState({
+      Semester_list: [...this.state.Semester_list, newSemester]
+    })
+
     // fix name format by just taking class category and number
     let nameParts = newClassObj.id.match(/([A-Z]{4})(.*)([\d]{4})/);
     newClassObj.id = nameParts[1] + ' ' + nameParts[3];
@@ -166,7 +196,7 @@ class App extends Component {
     }
 
     // if is already in flowchart, alert the user, but still add it to the list
-    if (newClassObj.id in this.state.ClassDesc) {
+    if (newClassObj.id in this.state.classDesc) {
       this.setState({ showAlert: ['danger', `Class already exists! It was added to your flowchart as a ${status} class.`] });
       return;
     }
@@ -176,6 +206,7 @@ class App extends Component {
     this.setState({
       ClassDesc: newClassDesc,
       AddedClasses: [...this.state.AddedClasses, newClassObj.id]
+
     });
     /*/ 
       This is where the "Add Custom Class" API call exists 
@@ -525,10 +556,12 @@ class App extends Component {
     // pass handleOnDragEnd for changing state when class dragged
     return (
       <FlowChart
+        //
+        //setState={this.setState.bind(this)}
         Categories={this.state.Categories}
         onAddClassSubmit={this.onAddClassSubmit}
         Semesters={this.state.Semester_list}
-        Classes={classInfo}
+        //Classes={classInfo}
         ColorOrder={this.state.ColorOrder}
         Colors={this.state.Colors}
         onDragEnd={this.handleOnDragEnd}>

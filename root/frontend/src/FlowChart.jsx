@@ -36,10 +36,12 @@ function HoverDropdown(props) {
         <div>
           {/* Revised add custom class button */}
           <AddCustomClass
-            onSubmit={props.onAddClassSubmit && toggleMenu}
-            CategoryOpts={Object.keys(props.Categories).filter(
-              (k) => "FC_Name" in props.Categories[k]
-            )}
+            onSubmit={(newClassObj, status) => {
+              props.onAddClassSubmit(newClassObj, status);
+              toggleMenu;
+              console.log("Adding custom class");
+            }}
+            CategoryOpts={props.Categories}
             autoSemInfo={semYear}
           />
         </div>
@@ -186,7 +188,7 @@ function FlowChart(props) {
                           </Draggable>
                           ))}
                           {/* Hover-dropdown for the add class button */}
-                          <HoverDropdown semYear={{sem: sem.split('-')[0], year: year[0]}} Categories={props.Categories} onAddClassSubmit={props.onAddClassSubmit} />
+                          <HoverDropdown semYear={{sem: sem.term, year: sem.year}} Categories={props.Categories} onAddClassSubmit={props.onAddClassSubmit} />
                           {/* To keep everything in place when dragging around classes */}
                           {provided.placeholder}
                         </Col>
