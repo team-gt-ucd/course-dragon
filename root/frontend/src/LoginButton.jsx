@@ -4,7 +4,7 @@ import StatusButtons from './StatusButtons';
 
 
 /*** Function to create a modal to add a custom class ***/
-function LoginButton() {
+function LoginButton(props) {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [showSignupForm, setShowSignupForm] = useState(false);
   const [showLogOutForm, setShowLogOutForm] = useState(false);
@@ -106,6 +106,7 @@ function LoginButton() {
         if (data.success) {
           setEmail(email);
           setIsLoggedIn(true);
+          props.onLogin();
           // refresh the current webpage
           //location.reload();
         } else {

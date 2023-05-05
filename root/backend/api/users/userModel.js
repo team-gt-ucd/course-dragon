@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import session from 'express-session';
 import passport from 'passport';
 import passportLocalMongoose from 'passport-local-mongoose';
+import { degreeMapSchema } from '../degree-map/degreeMapModel.js';
 // import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 // import findOrCreate from 'mongoose-findorcreate';
 
@@ -13,6 +14,7 @@ import passportLocalMongoose from 'passport-local-mongoose';
 const userSchema = new mongoose.Schema ({
   email: String,
   password: String,
+  DegreeMap_list: degreeMapSchema,
 },{timestamps: true});
 
 userSchema.plugin(passportLocalMongoose);       // this is what access our secretKey from .env file
