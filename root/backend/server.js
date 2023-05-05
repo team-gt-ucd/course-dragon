@@ -31,7 +31,7 @@ app.use(express.json());
 
 //--------------- List of our Routes (add new routes here) ---------------
 app.use("/", homeRoutes);
-app.use("/users", userRoutes);
+app.use("/user", userRoutes);
 app.use("/credits", creditsRoutes);
 app.use("/course",courseRoutes);
 app.use("/instructor-score", instructorScoreRoutes);
