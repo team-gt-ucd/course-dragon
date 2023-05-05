@@ -532,13 +532,35 @@ class App extends Component {
   }
 
   onAddSemesterSubmit = (semester) => {
-    if (this.state.Semesters.includes(semester)) {
+    let updatedSemester_list = this.state.Semester_list;
+    let term = semester.split("-")[0].toLowerCase();
+    let year = parseInt(semester.split("-")[1]);
+    let semesterIndex = this.state.Semester_list.findIndex(obj => obj.year == year && obj.term == term);
+    if (semesterIndex != -1) {
       this.setState({ showAlert: ['danger', 'Semester already exists. Check your flowchart.'] });
       return;
     }
+    updatedSemester_list.push({
+      term: term,
+      year: year,
+      Courses_list: [],
+    })
+    updatedSemester_list.sort((a, b) => {
+      if (a.year == b.year) {
+        if (a.term == "fall" && (b.term == "winter" || b.term == "spring" || b.term == "summer")
+        || a.term == "winter" && (b.term == "spring" || b.term == "summer")
+        || a.term == "spring" && b.term == "summer") {
+          return -1;
+        } else {
+          return 1;
+        }
+      } else {
+        return a.year - b.year;
+      }
+    })
     this.setState({ 
       showAlert: ['success', 'Semester added to flowchart. Drag any classes into the new semester.'], 
-      Semesters: [...this.state.Semesters, semester] 
+      Semester_list: updatedSemester_list 
     });
     /*/ 
       This is where the "Add Semseter" API call exists 
