@@ -40,7 +40,7 @@ function LoginButton(props) {
   };
 
   const createUsers = () => {
-    let apiURL = "http://localhost:4001/user/signup";
+    let apiURL = "http://coursedragon.xyz:4001/user/signup";
   
     if (!email || !password) {
       setErrorMessage("Email and Password are required");
@@ -77,7 +77,7 @@ function LoginButton(props) {
   };
     
   const loginUsers = () => {
-    let apiURL = "http://localhost:4001/user/login";
+    let apiURL = "http://coursedragon.xyz:4001/user/login";
   
     if (!email || !password) {
       setErrorMessage("Email and Password are required.");
